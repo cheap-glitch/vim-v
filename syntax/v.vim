@@ -25,17 +25,20 @@ endif
 let b:current_syntax="v"
 
 " ==============================================================================
-" Comments
+" Operators
 " ==============================================================================
 
-syn match  vComment          #\v//.*#
-syn region vMultiLineComment start=#\v/\*# end=#\v\*/# skip=/\v'|"/
+syn match vOperator /\v[=!<>:*/+-]?\=/
+syn match vOperator /\V+/
+syn match vOperator /\V-/
+syn match vOperator /\V*/
+syn match vOperator "\V/"
+syn match vOperator /\V>/
+syn match vOperator /\V</
+syn match vOperator /\V++/
+syn match vOperator /\V--/
 
-syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
-
-hi link vComment          Comment
-hi link vMultiLineComment Comment
-hi link vTodo             Todo
+hi link vOperator Operator
 
 " ==============================================================================
 " Types
@@ -57,34 +60,25 @@ hi link vStructure Structure
 
 syn keyword vBoolean true false
 syn match vNumber /\v\d+(\.(\d+)?)?/
+syn match vCharacter /\v`.`/
 
-hi link vNumber  Number
-hi link vBoolean Boolean
+hi link vNumber    Number
+hi link vBoolean   Boolean
+hi link vCharacter Character
 
 " ==============================================================================
 " Strings
 " ==============================================================================
 
-syn region vStringSingleQuote start=/\vr?'/ end=/\v'/ skip=/\v(\\)@<!\\'/
-syn region vStringDoubleQuote start=/\vr?"/ end=/\v"/ skip=/\v(\\)@<!\\"/
+syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@<!\\'/
+syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@<!\\"/
 
-syn match vCharacter /\v`.`/
+" String interpolations
+syn match vSimpleInterpolation contained containedin=vString /\v(\\)@<!\$\w+/
+syn region vInterpolation      contained containedin=vString matchgroup=vSimpleInterpolation start=/\v(\\)@<!\$\{/ end=/\V}/
 
-hi link vStringSingleQuote String
-hi link vStringDoubleQuote String
-hi link vCharacter         Character
-
-" ==============================================================================
-" Operators
-" ==============================================================================
-
-syn match vOperator /\v[=!<>:*/+-]?\=/
-syn match vOperator /\V>/
-syn match vOperator /\V</
-syn match vOperator /\V++/
-syn match vOperator /\V--/
-
-hi link vOperator Operator
+hi link vString              String
+hi link vSimpleInterpolation Special
 
 " ==============================================================================
 " Keywords
@@ -115,10 +109,10 @@ syn keyword vLabel default
 syn keyword vSpecial pub
 
 " Pre-compilaton conditionals
-syn region  vPreCond   start=/\V$if/ end=/\v$/
-syn match   vPreCondIf /\V$if/           containedin=vPreCond
-syn keyword vOS        linux mac windows containedin=vPreCond
-syn keyword vDebug     debug             containedin=vPreCond
+syn region  vPreCond   start=/\V$if/ end=/\v$/ transparent
+syn match   vPreCondIf /\V$if/           contained containedin=vPreCond
+syn keyword vOS        linux mac windows contained containedin=vPreCond
+syn keyword vDebug     debug             contained containedin=vPreCond
 
 hi link vKeyword      Keyword
 hi link vConditional  Conditional
@@ -161,19 +155,34 @@ hi link vBuiltInModule Function
 hi link vModuleName    Identifier
 
 " ==============================================================================
+" Comments
+" ==============================================================================
+
+syn match  vComment          "\v//.*"
+syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"/
+
+syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
+
+hi link vComment          Comment
+hi link vMultiLineComment Comment
+hi link vTodo             Todo
+
+" ==============================================================================
 " Folding
 " ==============================================================================
 
 syn region vFold start="{" end="}" transparent fold
 
+"@TODO: add more constructs
+
 " ==============================================================================
 " Warnings
 " ==============================================================================
 
-" Highlight lines ending with semicolons
-syn match vWarning /\v.*;$/
+" Highlight lines containing statements ending with semicolons
+syn match vWarning /\v.*;(\s*}|$)/
 
 " Highlight conditions surrounded by parentheses
-syn match vWarning /\v(if)@<=.*[()]/
+syn match vWarning /\v(if)@<=[^{]*[()]/
 
 hi link vWarning Error

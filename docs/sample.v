@@ -3,10 +3,37 @@
  * vim-v/docs/sample.v
  */
 
-module factorial
-import math
+module main
 
-// factorial returns the factorial of a number
+import time
+import automaton
+
+$if debug { println("program started at: ${time.now()}") }
+
+pub fn print_automaton(a &automaton.Automaton){
+	for y := 1; y<a.field.maxy; y++ {
+		mut s := '    '
+		for x := 1; x<a.field.maxx; x++ {
+			cell := a.field.get(x,y)
+			s += if cell == 1 { '@' } else { '.' }
+		}
+		println(s)
+	}
+	println('')
+}
+
+fn main() {
+	mut a := automaton.gun()
+	for {
+		a.update()
+		print_automaton(a)
+		time.sleep_ms(100)
+	}
+}
+
+/**
+ * Return the factorial of a number
+ */
 pub fn factorial(n int) {
 	mut f := 0
 

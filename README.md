@@ -1,12 +1,10 @@
 # vim-v
-![Code sample]()
-_colorscheme: (iceberg)[]_
+![Code sample](https://raw.githubusercontent.com/cheap-glitch/vim-v/master/docs/sample.png)
+<p align="right">_colorscheme: [Iceberg](https://github.com/cocopon/iceberg.vim), font: Hack_</p>
 
-**vim-v** aims to provides syntax highlighting and other niceties for the
-[V programming language](https://vlang.io). Goals:
- * full syntax coverage
- * good syntactic folding
- * warnings for invalid C-like syntax
+**vim-v**  aims  to   provides  syntax   highlighting   for   the
+[V  programming language](https://vlang.io), plus a  few niceties
+such as syntactic folding and warnings for invalid C-like syntax.
 
 _vim-v is still a work in progress, and contributions are very much welcomed!_
 
@@ -29,7 +27,8 @@ Then reload your _vimrc_ and run `:PlugInstall`.
 
 ## Acknowledgements
 
-The first version of the code was based on [v.vim](https://github.com/andreyrmg/v.vim)
+The first version of the code was based on
+[v.vim](https://github.com/andreyrmg/v.vim)
 by [andreyrmg](https://github.com/andreyrmg).
 
 ## License
