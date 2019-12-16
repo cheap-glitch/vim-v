@@ -8,7 +8,7 @@
 [V  programming language](https://vlang.io), plus a  few niceties
 such as syntactic folding and warnings for invalid C-like syntax.
 
-_vim-v is still a work in progress, and contributions are very much welcomed!_
+ > vim-v is still a work in progress, and contributions are very much welcomed!
 
 ## Installation
 
