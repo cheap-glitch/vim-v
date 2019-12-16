@@ -1,7 +1,7 @@
-# vim-v
 <p align="center">
+	<h1>vim-v</h1>
 	<img src="https://raw.githubusercontent.com/cheap-glitch/vim-v/master/docs/sample.png" alt="code sample">
-	<em>colorscheme: [Iceberg](https://github.com/cocopon/iceberg.vim), font: Hack</em>
+	<p><em>colorscheme: [Iceberg](https://github.com/cocopon/iceberg.vim), font: Hack</em></p>
 </p>
 
 **vim-v**  aims  to   provides  syntax   highlighting   for   the
