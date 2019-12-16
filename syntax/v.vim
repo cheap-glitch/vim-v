@@ -44,7 +44,7 @@ hi link vOperator Operator
 " Types
 " ==============================================================================
 
-syn keyword vTypes     bool byte byteptr rune string voidptr
+syn keyword vType      bool byte byteptr rune string voidptr
 syn keyword vInts      int i8 u8 i16 u16 i32 u32 i64 u64
 syn keyword vFloats    f32 f64
 syn keyword vStructure enum struct
