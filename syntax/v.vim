@@ -70,12 +70,12 @@ hi link vCharacter Character
 " Strings
 " ==============================================================================
 
-syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@<!\\'/
-syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@<!\\"/
+syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@1<!\\'/
+syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@1<!\\"/
 
 " String interpolations
-syn match vSimpleInterpolation contained containedin=vString /\v(\\)@<!\$\w+/
-syn region vInterpolation      contained containedin=vString matchgroup=vSimpleInterpolation start=/\v(\\)@<!\$\{/ end=/\V}/
+syn match vSimpleInterpolation contained containedin=vString /\v(\\)@1<!\$\w+/
+syn region vInterpolation      contained containedin=vString matchgroup=vSimpleInterpolation start=/\v(\\)@1<!\$\{/ end=/\V}/
 
 hi link vString              String
 hi link vSimpleInterpolation Special
@@ -135,10 +135,12 @@ syn keyword vBuiltInFunction println
 syn keyword vBuiltInFunction repeat
 
 " User-defined
-syn match vFunctionDeclaration /\v(fn )@<=\w+/
+syn match vFunctionDeclaration /\v(fn )@5<=\w+/
+syn match vMethodDeclaration   /\v(fn \(\a+ \a+\) )@<=\w+/
 
 hi link vBuiltInFunction     Function
 hi link vFunctionDeclaration Title
+hi link vMethodDeclaration   Title
 
 " ==============================================================================
 " Modules
@@ -149,7 +151,7 @@ syn keyword vBuiltInModule math
 syn keyword vBuiltInModule os
 
 " User-defined
-syn match vModuleName /\v((import )@<=|(module )@<=).+/
+syn match vModuleName /\v((import )@7<=|(module )@7<=).+/
 
 hi link vBuiltInModule Function
 hi link vModuleName    Identifier
@@ -183,6 +185,6 @@ syn region vFold start="{" end="}" transparent fold
 syn match vWarning /\v.*;(\s*}|$)/
 
 " Highlight conditions surrounded by parentheses
-syn match vWarning /\v(if)@<=[^{]*[()]/
+syn match vWarning /\v(if)@2<=[^{]*[()]/
 
 hi link vWarning Error
