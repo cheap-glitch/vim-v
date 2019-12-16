@@ -27,6 +27,11 @@ call plug#end()
 ```
 Then reload your _vimrc_ and run `:PlugInstall`.
 
+## Acknowledgements
+
+The first version of the code was based on [v.vim](https://github.com/andreyrmg/v.vim)
+by [andreyrmg](https://github.com/andreyrmg).
+
 ## License
 
 This software is distributed under the ISC license.

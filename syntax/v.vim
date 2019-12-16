@@ -2,7 +2,7 @@
 "
 " vim-v/syntax
 "
-" Syntax highlighting for the V programming language
+" Quality syntax highlighting for the V programming language.
 "
 " Copyright (c) 2019-present, cheap glitch
 "
@@ -93,7 +93,7 @@ hi link vOperator Operator
 syn keyword vKeyword break
 syn keyword vKeyword const
 syn keyword vKeyword continue
-syn keyword vKeyword fn nextgroup=vFunctionDeclaration skipwhite
+syn keyword vKeyword fn
 syn keyword vKeyword import
 syn keyword vKeyword len
 syn keyword vKeyword map
@@ -139,10 +139,9 @@ syn keyword vBuiltInFunction eprintln
 syn keyword vBuiltInFunction print
 syn keyword vBuiltInFunction println
 syn keyword vBuiltInFunction repeat
-syn keyword vBuiltInFunction repeat
 
 " User-defined
-" syn match vFunctionDeclaration /\v[^(]+/
+syn match vFunctionDeclaration /\v(fn )@<=\w+/
 
 hi link vBuiltInFunction     Function
 hi link vFunctionDeclaration Title
@@ -156,24 +155,25 @@ syn keyword vBuiltInModule math
 syn keyword vBuiltInModule os
 
 " User-defined
-" @TODO
+syn match vModuleName /\v((import )@<=|(module )@<=).+/
 
 hi link vBuiltInModule Function
+hi link vModuleName    Identifier
 
 " ==============================================================================
 " Folding
 " ==============================================================================
 
-" @TODO
+syn region vFold start="{" end="}" transparent fold
 
 " ==============================================================================
 " Warnings
 " ==============================================================================
 
-" Highlight semicolons at the end of lines
-syn match vWarning /\v;$/
+" Highlight lines ending with semicolons
+syn match vWarning /\v.*;$/
 
-" Highlight parentheses around conditions
-" @TODO
+" Highlight conditions surrounded by parentheses
+syn match vWarning /\v(if)@<=.*[()]/
 
 hi link vWarning Error
