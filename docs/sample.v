@@ -1,6 +1,6 @@
 
 /**
- * vim-v/docs/sample.v
+ * vim-v/docs/sample.vim
  */
 
 module main
@@ -8,9 +8,14 @@ module main
 import time
 import automaton
 
+// @TODO: add system info
 $if debug { println("program started at: ${time.now()}") }
 
-pub fn print_automaton(a &automaton.Automaton){
+/**
+ * Print a grid representing
+ * the current state of the automaton
+ */
+pub fn print_automaton(a &automaton.Automaton) {
 	for y := 1; y<a.field.maxy; y++ {
 		mut s := '    '
 		for x := 1; x<a.field.maxx; x++ {
