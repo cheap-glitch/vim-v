@@ -6,6 +6,7 @@
 "
 " Copyright (c) 2019-present, cheap glitch
 "
+"
 " Permission to use, copy, modify, and/or distribute this software for any purpose
 " with or without fee is hereby  granted, provided that the above copyright notice
 " and this permission notice appear in all copies.
@@ -161,7 +162,7 @@ hi link vModuleName    Identifier
 " ==============================================================================
 
 syn match  vComment          "\v//.*"
-syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"/
+syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
 
 syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
 

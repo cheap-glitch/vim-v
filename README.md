@@ -1,6 +1,6 @@
 <div align="center">
 	<h1>vim-v</h1>
-	<img src="https://raw.githubusercontent.com/cheap-glitch/vim-v/master/docs/sample.png" alt="code sample">
+	<img src="https://raw.githubusercontent.com/cheap-glitch/vim-v/master/docs/screenshot.png" alt="code sample">
 	<p><em>colorscheme: <a href="https://github.com/cocopon/iceberg.vim">Iceberg</a>, font: Hack</em></p>
 </div>
 
