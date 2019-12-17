@@ -92,6 +92,7 @@ syn keyword vKeyword fn
 syn keyword vKeyword import
 syn keyword vKeyword len
 syn keyword vKeyword map
+syn keyword vKeyword match
 syn keyword vKeyword module
 syn keyword vKeyword mut
 syn keyword vKeyword return
@@ -125,13 +126,23 @@ hi link vOS           PreCondit
 hi link vDebug        Debug
 
 " ==============================================================================
+" Labels
+" ==============================================================================
+
+" Match-blocks labels
+syn region vMatchBlock start=/\v(match \w+ )@<=\{/ end=/\V}/ skip=/\v\{[^}]\}/ transparent
+syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1 contained containedin=vMatchBlock
+
+hi link vMatchLabel Identifier
+
+" ==============================================================================
 " Functions
 " ==============================================================================
 
 syn match vFunctionCall        /\v \w+\(/he=e-1
-" syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1
-syn match vFunctionDeclaration /\v(fn)@5<= \w+/
-syn match vMethodDeclaration   /\v(fn \(\a+ \a+\))@<= \w+/
+syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1
+syn match vFunctionDeclaration /\v(fn)@2<= \w+/
+syn match vMethodDeclaration   /\v(fn \(\w+ \w+\))@<= \w+/
 
 hi link vFunctionCall        Function
 hi link vMethodCall          Function
@@ -147,7 +158,7 @@ syn keyword vBuiltInModule math
 syn keyword vBuiltInModule os
 
 " User-defined
-syn match vModuleName /\v((import )@7<=|(module )@7<=).+/
+syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
 
 hi link vBuiltInModule Function
 hi link vModuleName    Identifier
