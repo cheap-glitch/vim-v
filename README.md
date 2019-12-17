@@ -3,6 +3,7 @@
 	<img src="https://raw.githubusercontent.com/cheap-glitch/vim-v/master/docs/screenshot.png" alt="code sample">
 	<p><em>colorscheme: <a href="https://github.com/cocopon/iceberg.vim">Iceberg</a>, font: Hack</em></p>
 </div>
+<p></p>
 
 **vim-v**  aims  to   provides  syntax   highlighting   for   the
 [V  programming language](https://vlang.io), plus a  few niceties

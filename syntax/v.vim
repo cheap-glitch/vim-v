@@ -59,13 +59,13 @@ hi link vStructure Structure
 " Constants
 " ==============================================================================
 
-syn keyword vBoolean true false
-syn match vNumber /\v\d+(\.(\d+)?)?/
+syn match vNumber    /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
 syn match vCharacter /\v`.`/
+syn keyword vBoolean true false
 
 hi link vNumber    Number
-hi link vBoolean   Boolean
 hi link vCharacter Character
+hi link vBoolean   Boolean
 
 " ==============================================================================
 " Strings
