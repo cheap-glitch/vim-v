@@ -128,18 +128,13 @@ hi link vDebug        Debug
 " Functions
 " ==============================================================================
 
-" Built-in
-syn keyword vBuiltInFunction eprint
-syn keyword vBuiltInFunction eprintln
-syn keyword vBuiltInFunction print
-syn keyword vBuiltInFunction println
-syn keyword vBuiltInFunction repeat
+syn match vFunctionCall        /\v \w+\(/he=e-1
+" syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1
+syn match vFunctionDeclaration /\v(fn)@5<= \w+/
+syn match vMethodDeclaration   /\v(fn \(\a+ \a+\))@<= \w+/
 
-" User-defined
-syn match vFunctionDeclaration /\v(fn )@5<=\w+/
-syn match vMethodDeclaration   /\v(fn \(\a+ \a+\) )@<=\w+/
-
-hi link vBuiltInFunction     Function
+hi link vFunctionCall        Function
+hi link vMethodCall          Function
 hi link vFunctionDeclaration Title
 hi link vMethodDeclaration   Title
 
@@ -156,6 +151,18 @@ syn match vModuleName /\v((import )@7<=|(module )@7<=).+/
 
 hi link vBuiltInModule Function
 hi link vModuleName    Identifier
+
+" ==============================================================================
+" Warnings
+" ==============================================================================
+
+" Highlight lines containing statements ending with semicolons
+syn match vWarning /\v.*;(\s*}|$)/
+
+" Highlight conditions surrounded by parentheses
+syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
+
+hi link vWarning Error
 
 " ==============================================================================
 " Comments
@@ -177,15 +184,3 @@ hi link vTodo             Todo
 syn region vFold start="{" end="}" transparent fold
 
 "@TODO: add more constructs
-
-" ==============================================================================
-" Warnings
-" ==============================================================================
-
-" Highlight lines containing statements ending with semicolons
-syn match vWarning /\v.*;(\s*}|$)/
-
-" Highlight conditions surrounded by parentheses
-syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
-
-hi link vWarning Error
