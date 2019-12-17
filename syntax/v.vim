@@ -161,7 +161,7 @@ hi link vModuleName    Identifier
 " Comments
 " ==============================================================================
 
-syn match  vComment          "\v//.*"
+syn match  vComment          "\v//.*$"
 syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
 
 syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
@@ -186,6 +186,6 @@ syn region vFold start="{" end="}" transparent fold
 syn match vWarning /\v.*;(\s*}|$)/
 
 " Highlight conditions surrounded by parentheses
-syn match vWarning /\v(if)@2<=[^{]*[()]/
+syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
 
 hi link vWarning Error
