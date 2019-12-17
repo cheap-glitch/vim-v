@@ -28,6 +28,7 @@ let b:current_syntax="v"
 " ==============================================================================
 " Operators
 " ==============================================================================
+" {{{
 
 syn match vOperator /\v[=!<>:*/+-]?\=/
 syn match vOperator /\V+/
@@ -41,9 +42,11 @@ syn match vOperator /\V--/
 
 hi link vOperator Operator
 
+" }}}
 " ==============================================================================
 " Types
 " ==============================================================================
+" {{{
 
 syn keyword vType      bool byte byteptr rune string voidptr
 syn keyword vInts      int i8 u8 i16 u16 i32 u32 i64 u64
@@ -55,9 +58,11 @@ hi link vInts      Type
 hi link vFloats    Type
 hi link vStructure Structure
 
+" }}}
 " ==============================================================================
 " Constants
 " ==============================================================================
+" {{{
 
 syn match vNumber    /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
 syn match vCharacter /\v`.`/
@@ -67,9 +72,11 @@ hi link vNumber    Number
 hi link vCharacter Character
 hi link vBoolean   Boolean
 
+" }}}
 " ==============================================================================
 " Strings
 " ==============================================================================
+" {{{
 
 syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@1<!\\'/
 syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@1<!\\"/
@@ -81,9 +88,11 @@ syn region vInterpolation      contained containedin=vString matchgroup=vSimpleI
 hi link vString              String
 hi link vSimpleInterpolation Special
 
+" }}}
 " ==============================================================================
-" Keywords
+" Statements
 " ==============================================================================
+" {{{
 
 syn keyword vKeyword break
 syn keyword vKeyword const
@@ -125,9 +134,11 @@ hi link vPreCondIf    PreCondit
 hi link vOS           PreCondit
 hi link vDebug        Debug
 
+" }}}
 " ==============================================================================
 " Labels
 " ==============================================================================
+" {{{
 
 " Match-blocks labels
 syn region vMatchBlock start=/\v(match \w+ )@<=\{/ end=/\V}/ skip=/\v\{[^}]\}/ transparent
@@ -135,9 +146,11 @@ syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1 contained containedin=vMatchBlock
 
 hi link vMatchLabel Identifier
 
+" }}}
 " ==============================================================================
 " Functions
 " ==============================================================================
+" {{{
 
 syn match vFunctionCall        /\v \w+\(/he=e-1
 syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1
@@ -149,9 +162,11 @@ hi link vMethodCall          Function
 hi link vFunctionDeclaration Title
 hi link vMethodDeclaration   Title
 
+" }}}
 " ==============================================================================
 " Modules
 " ==============================================================================
+" {{{
 
 " Built-in
 syn keyword vBuiltInModule math
@@ -163,9 +178,11 @@ syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
 hi link vBuiltInModule Function
 hi link vModuleName    Identifier
 
+" }}}
 " ==============================================================================
 " Warnings
 " ==============================================================================
+" {{{
 
 " Highlight lines containing statements ending with semicolons
 syn match vWarning /\v.*;(\s*}|$)/
@@ -175,9 +192,11 @@ syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
 
 hi link vWarning Error
 
+" }}}
 " ==============================================================================
 " Comments
 " ==============================================================================
+" {{{
 
 syn match  vComment          "\v//.*$"
 syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
@@ -188,10 +207,12 @@ hi link vComment          Comment
 hi link vMultiLineComment Comment
 hi link vTodo             Todo
 
+" }}}
 " ==============================================================================
-" Folding
+" Blocks
 " ==============================================================================
+" {{{
 
-syn region vFold start="{" end="}" transparent fold
+" syn region vFold start=/\v\{$/ end=/\v\}$/ transparent fold
 
-"@TODO: add more constructs
+" }}}
