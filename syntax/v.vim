@@ -26,11 +26,23 @@ endif
 let b:current_syntax="v"
 
 " ==============================================================================
+" Blocks
+" ==============================================================================
+" {{{
+
+syn region vBlockElse     start=/\V{/ end=/\V}/ transparent fold
+syn region vBlockConst    start=/\V(/ end=/\V)/ transparent fold
+syn region vBlockFunction start=/\V{/ end=/\V}/ transparent fold
+syn region vBlockMap      start=/\V{/ end=/\V}/ transparent fold
+syn region vBlockMatch    start=/\V{/ end=/\V}/ transparent fold
+syn region vBlockStruct   start=/\V{/ end=/\V}/ transparent fold
+
+" }}}
+" ==============================================================================
 " Operators
 " ==============================================================================
 " {{{
 
-syn match vOperator /\v[=!<>:*/+-]?\=/
 syn match vOperator /\V+/
 syn match vOperator /\V-/
 syn match vOperator /\V*/
@@ -39,6 +51,8 @@ syn match vOperator /\V>/
 syn match vOperator /\V</
 syn match vOperator /\V++/
 syn match vOperator /\V--/
+syn match vOperator /\v[=!<>*/+-]?\=/
+syn match vOperator /\V:=/ nextgroup=vBlockMap
 
 hi link vOperator Operator
 
@@ -94,30 +108,26 @@ hi link vSimpleInterpolation Special
 " ==============================================================================
 " {{{
 
-syn keyword vKeyword break
-syn keyword vKeyword const
-syn keyword vKeyword continue
-syn keyword vKeyword fn
-syn keyword vKeyword import
-syn keyword vKeyword len
-syn keyword vKeyword map
-syn keyword vKeyword match
-syn keyword vKeyword module
-syn keyword vKeyword mut
-syn keyword vKeyword return
-
-syn keyword vConditional else
-syn keyword vConditional if
-syn keyword vConditional or
-syn keyword vConditional switch
-
-syn keyword vRepeat for
-syn keyword vRepeat in
-
-syn keyword vLabel case
-syn keyword vLabel default
-
-syn keyword vSpecial pub
+syn keyword vKeyword      break
+syn keyword vKeyword      const     skipwhite skipempty nextgroup=vBlockConst
+syn keyword vKeyword      continue
+syn keyword vKeyword      fn
+syn keyword vKeyword      import
+syn keyword vKeyword      len
+syn keyword vKeyword      map
+syn keyword vKeyword      match
+syn keyword vKeyword      module
+syn keyword vKeyword      mut
+syn keyword vKeyword      return
+syn keyword vConditional  else      skipwhite skipempty nextgroup=vBlockElse
+syn keyword vConditional  if        skipwhite skipempty nextgroup=vCondition
+syn keyword vConditional  or        skipwhite skipempty nextgroup=vBlockElse
+syn keyword vConditional  switch
+syn keyword vRepeat       for
+syn keyword vRepeat       in
+syn keyword vLabel        case
+syn keyword vLabel        default
+syn keyword vPub          pub
 
 " Pre-compilaton conditionals
 syn region  vPreCond   start=/\V$if/ end=/\v$/ transparent
@@ -129,7 +139,7 @@ hi link vKeyword      Keyword
 hi link vConditional  Conditional
 hi link vRepeat       Repeat
 hi link vLabel        Label
-hi link vSpecial      Special
+hi link vPub          Special
 hi link vPreCondIf    PreCondit
 hi link vOS           PreCondit
 hi link vDebug        Debug
@@ -140,9 +150,11 @@ hi link vDebug        Debug
 " ==============================================================================
 " {{{
 
+" Map keys
+" @TODO
+
 " Match-blocks labels
-syn region vMatchBlock start=/\v(match \w+ )@<=\{/ end=/\V}/ skip=/\v\{[^}]\}/ transparent
-syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1 contained containedin=vMatchBlock
+syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1 contained containedin=vBlockMatch
 
 hi link vMatchLabel Identifier
 
@@ -206,13 +218,5 @@ syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
 hi link vComment          Comment
 hi link vMultiLineComment Comment
 hi link vTodo             Todo
-
-" }}}
-" ==============================================================================
-" Blocks
-" ==============================================================================
-" {{{
-
-" syn region vFold start=/\v\{$/ end=/\v\}$/ transparent fold
 
 " }}}
