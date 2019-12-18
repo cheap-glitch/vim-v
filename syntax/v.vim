@@ -30,12 +30,16 @@ let b:current_syntax="v"
 " ==============================================================================
 " {{{
 
-syn region vBlockElse     start=/\V{/ end=/\V}/ transparent fold
-syn region vBlockConst    start=/\V(/ end=/\V)/ transparent fold
-syn region vBlockFunction start=/\V{/ end=/\V}/ transparent fold
-syn region vBlockMap      start=/\V{/ end=/\V}/ transparent fold
-syn region vBlockMatch    start=/\V{/ end=/\V}/ transparent fold
-syn region vBlockStruct   start=/\V{/ end=/\V}/ transparent fold
+syn region vBlockArgs       start=/\V(/ end=/\V)/ transparent      contained
+syn region vBlockConst      start=/\V(/ end=/\V)/ transparent fold contained
+syn region vBlockElse       start=/\V{/ end=/\V}/ transparent fold contained
+syn region vBlockEnum       start=/\V{/ end=/\V}/ transparent fold contained
+syn region vBlockFunction   start=/\V{/ end=/\V}/ transparent fold contained
+syn region vBlockMap        start=/\V{/ end=/\V}/ transparent fold contained
+syn region vBlockMatch      start=/\V{/ end=/\V}/ transparent fold contained
+syn region vBlockParams     start=/\V(/ end=/\V)/ transparent      contained
+syn region vBlockStruct     start=/\V{/ end=/\V}/ transparent fold contained
+syn region vBlockTypecast   start=/\V(/ end=/\V)/ transparent      contained containedin=vBlockTypecast
 
 " }}}
 " ==============================================================================
@@ -52,9 +56,7 @@ syn match vOperator /\V</
 syn match vOperator /\V++/
 syn match vOperator /\V--/
 syn match vOperator /\v[=!<>*/+-]?\=/
-syn match vOperator /\V:=/ nextgroup=vBlockMap
-
-hi link vOperator Operator
+syn match vOperator /\V:=/ skipwhite skipempty nextgroup=vBlockMap
 
 " }}}
 " ==============================================================================
@@ -62,15 +64,10 @@ hi link vOperator Operator
 " ==============================================================================
 " {{{
 
-syn keyword vType      bool byte byteptr rune string voidptr
-syn keyword vInts      int i8 u8 i16 u16 i32 u32 i64 u64
-syn keyword vFloats    f32 f64
+syn keyword vType      bool byte byteptr rune string voidptr nextgroup=vBlockTypecast
+syn keyword vInts      int i8 u8 i16 u16 i32 u32 i64 u64     nextgroup=vBlockTypecast
+syn keyword vFloats    f32 f64                               nextgroup=vBlockTypecast
 syn keyword vStructure enum struct
-
-hi link vType      Type
-hi link vInts      Type
-hi link vFloats    Type
-hi link vStructure Structure
 
 " }}}
 " ==============================================================================
@@ -81,10 +78,6 @@ hi link vStructure Structure
 syn match vNumber    /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
 syn match vCharacter /\v`.`/
 syn keyword vBoolean true false
-
-hi link vNumber    Number
-hi link vCharacter Character
-hi link vBoolean   Boolean
 
 " }}}
 " ==============================================================================
@@ -98,9 +91,6 @@ syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@1<!\\"/
 " String interpolations
 syn match vSimpleInterpolation contained containedin=vString /\v(\\)@1<!\$\w+/
 syn region vInterpolation      contained containedin=vString matchgroup=vSimpleInterpolation start=/\v(\\)@1<!\$\{/ end=/\V}/
-
-hi link vString              String
-hi link vSimpleInterpolation Special
 
 " }}}
 " ==============================================================================
@@ -130,19 +120,11 @@ syn keyword vLabel        default
 syn keyword vPub          pub
 
 " Pre-compilaton conditionals
-syn region  vPreCond   start=/\V$if/ end=/\v$/ transparent
-syn match   vPreCondIf /\V$if/           contained containedin=vPreCond
-syn keyword vOS        linux mac windows contained containedin=vPreCond
-syn keyword vDebug     debug             contained containedin=vPreCond
-
-hi link vKeyword      Keyword
-hi link vConditional  Conditional
-hi link vRepeat       Repeat
-hi link vLabel        Label
-hi link vPub          Special
-hi link vPreCondIf    PreCondit
-hi link vOS           PreCondit
-hi link vDebug        Debug
+syn region  vPreCond      start=/\V$if/ end=/\v$/ transparent
+syn match   vPreCondIf    /\V$if/                 contained containedin=vPreCond
+syn match   vPreCondElse  /\V$else/
+syn keyword vOS           linux mac windows       contained containedin=vPreCond
+syn keyword vDebug        debug                   contained containedin=vPreCond
 
 " }}}
 " ==============================================================================
@@ -150,13 +132,9 @@ hi link vDebug        Debug
 " ==============================================================================
 " {{{
 
-" Map keys
-" @TODO
-
-" Match-blocks labels
-syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1 contained containedin=vBlockMatch
-
-hi link vMatchLabel Identifier
+syn match vMapKey     /\v^\s*\w:/he=e-1        contained containedin=vBlockMap
+syn match vConstName  /\v^\s*\w+\s*\=/he=e-1   contained containedin=vBlockConst
+syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1  contained containedin=vBlockMatch
 
 " }}}
 " ==============================================================================
@@ -164,15 +142,10 @@ hi link vMatchLabel Identifier
 " ==============================================================================
 " {{{
 
-syn match vFunctionCall        /\v \w+\(/he=e-1
-syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1
-syn match vFunctionDeclaration /\v(fn)@2<= \w+/
-syn match vMethodDeclaration   /\v(fn \(\w+ \w+\))@<= \w+/
-
-hi link vFunctionCall        Function
-hi link vMethodCall          Function
-hi link vFunctionDeclaration Title
-hi link vMethodDeclaration   Title
+syn match vFunctionCall        /\v @1<=\w+\(/he=e-1         nextgroup=vBlockArgs
+syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1     nextgroup=vBlockArgs
+syn match vFunctionDeclaration /\v(fn)@2<= \w+/             nextgroup=vBlockParams
+syn match vMethodDeclaration   /\v(fn \(\w+ \w+\))@<= \w+/  nextgroup=vBlockParams
 
 " }}}
 " ==============================================================================
@@ -187,9 +160,6 @@ syn keyword vBuiltInModule os
 " User-defined
 syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
 
-hi link vBuiltInModule Function
-hi link vModuleName    Identifier
-
 " }}}
 " ==============================================================================
 " Warnings
@@ -202,21 +172,53 @@ syn match vWarning /\v.*;(\s*}|$)/
 " Highlight conditions surrounded by parentheses
 syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
 
-hi link vWarning Error
-
 " }}}
 " ==============================================================================
 " Comments
 " ==============================================================================
 " {{{
 
-syn match  vComment          "\v//.*$"
+syn match vComment "\v//.*$"
 syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
 
 syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
 
-hi link vComment          Comment
-hi link vMultiLineComment Comment
-hi link vTodo             Todo
+" }}}
+" ==============================================================================
+" Highlight links
+" ==============================================================================
+" {{{
+
+hi link   vBoolean               Boolean
+hi link   vBuiltInModule         Function
+hi link   vCharacter             Character
+hi link   vComment               Comment
+hi link   vConditional           Conditional
+hi link   vConstName             Identifier
+hi link   vDebug                 Debug
+hi link   vFloats                Type
+hi link   vFunctionCall          Function
+hi link   vFunctionDeclaration   Title
+hi link   vInts                  Type
+hi link   vKeyword               Keyword
+hi link   vLabel                 Label
+hi link   vMapKey                Identifier
+hi link   vMatchLabel            Identifier
+hi link   vMethodCall            Function
+hi link   vMethodDeclaration     Title
+hi link   vModuleName            Identifier
+hi link   vMultiLineComment      Comment
+hi link   vNumber                Number
+hi link   vOS                    PreCondit
+hi link   vOperator              Operator
+hi link   vPreCondIf             PreCondit
+hi link   vPub                   Special
+hi link   vRepeat                Repeat
+hi link   vSimpleInterpolation   Special
+hi link   vString                String
+hi link   vStructure             Structure
+hi link   vTodo                  Todo
+hi link   vType                  Type
+hi link   vWarning               Error
 
 " }}}
