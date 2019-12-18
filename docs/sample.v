@@ -3,8 +3,8 @@
  * docs/sample.v
  *
  * NOTE:
- *   This is not a valid V sourcefile, but a sample of arbitrary
- *   code to test the syntax  hilighting and associated features
+ *   This is not a valid V sourcefile, but  a sample of arbitrary
+ *   code to test the syntax highlighting and associated features
  */
 
 // Operators
@@ -54,6 +54,10 @@ point := Point{
 }
 
 // Constants
+`a`
+3.14
+true
+false
 const (
 	pi    = 3.14
 	world = '世界'
@@ -90,13 +94,44 @@ r"raw string"
 "complex interpolation #3: ${if time == true { time.now() } else { "time is an illusion!" }}"
 
 // Statements
-// @TODO
+mut bar := map[string]int
+
+if baz >= foo("text") {
+}
+else if foobar {
+}
+else {
+}
+
+for nb in [1, 2, 3] {
+	break
+	continue
+}
 
 // Labels
-// @TODO
+match music {
+	.rock    { println(rune(`🎸`))) }
+	.metal   { println(`🤘`)        }
+	.classic { println("🎻")        }
+}
 
 // Functions
-// @TODO
+fn nope() {}
+
+pub fn hello() string {
+	return 'hello $world'
+}
+
+fn (t Type) method(param int) {
+}
+
+pub fn (t Type) evil() int {
+	return 666
+}
+
+foo()
+nope()
+method(12)
 
 // Modules
 module mymodule
@@ -115,8 +150,13 @@ $if linux {
 $else {
 }
 
-// Warning
-// @TODO
+// Warnings
+mut var := 'No semicolons at the end of statements!';
+if true { mut var := 'No semicolons at the end of statements!'; }
+
+if (true) {
+	eprint('No parentheses around conditions!')
+}
 
 /**
  * Multiline comment
@@ -125,3 +165,5 @@ $else {
  *
  * "Strings" should be 'ignored' in comments
  */
+
+// vim:foldmethod=syntax:foldlevel=2:

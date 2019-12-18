@@ -125,7 +125,6 @@ syn keyword vKeyword      return
 syn keyword vConditional  else      skipwhite skipempty nextgroup=vBlockElse
 syn keyword vConditional  if        skipwhite skipempty nextgroup=vCondition
 syn keyword vConditional  or        skipwhite skipempty nextgroup=vBlockElse
-syn keyword vConditional  switch
 syn keyword vRepeat       for
 syn keyword vPub          pub
 
@@ -202,7 +201,7 @@ endif
 " {{{
 
 syn match  vComment          "\v//.*$"
-syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
+syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/ keepend
 
 syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
 
