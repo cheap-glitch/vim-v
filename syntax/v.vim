@@ -30,16 +30,24 @@ let b:current_syntax="v"
 " ==============================================================================
 " {{{
 
-syn region vBlockArgs       start=/\V(/ end=/\V)/ transparent      contained
-syn region vBlockConst      start=/\V(/ end=/\V)/ transparent fold contained
-syn region vBlockElse       start=/\V{/ end=/\V}/ transparent fold contained
-syn region vBlockEnum       start=/\V{/ end=/\V}/ transparent fold contained
-syn region vBlockFunction   start=/\V{/ end=/\V}/ transparent fold contained
-syn region vBlockMap        start=/\V{/ end=/\V}/ transparent fold contained
-syn region vBlockMatch      start=/\V{/ end=/\V}/ transparent fold contained
-syn region vBlockParams     start=/\V(/ end=/\V)/ transparent      contained
-syn region vBlockStruct     start=/\V{/ end=/\V}/ transparent fold contained
-syn region vBlockTypecast   start=/\V(/ end=/\V)/ transparent      contained containedin=vBlockTypecast
+syn region vBlockFuncArgs       start=/\V(/   end=/\V)/        transparent contained
+syn region vBlockConst          start=/\V(/   end=/\V)/   fold transparent contained
+syn region vBlockElse           start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockEnum           start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockFunction       start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockIf             start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockMap            start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockMatch          start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockMatchBranch    start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockFuncParams     start=/\V(/   end=/\V)/        transparent contained skipwhite skipempty nextgroup=vReturnType,vBlockFunction
+syn region vBlockStruct         start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockTypecast       start=/\V(/   end=/\V)/        transparent contained
+
+syn match  vCondition           /\v.+(\{)@=/                   transparent contained skipwhite skipempty nextgroup=vBlockIf
+syn match  vEnumName            /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockEnum
+syn match  vStructName          /\v(\w|\.)+/                   transparent contained skipwhite skipempty nextgroup=vBlockStruct
+syn match  vMatchedVar          /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockMatch
+syn match  vReturnType          /\v\w+/                        transparent contained skipwhite skipwhite nextgroup=vBlockFunction
 
 " }}}
 " ==============================================================================
@@ -51,6 +59,7 @@ syn match vOperator /\V+/
 syn match vOperator /\V-/
 syn match vOperator /\V*/
 syn match vOperator "\V/"
+syn match vOperator /\V%/
 syn match vOperator /\V>/
 syn match vOperator /\V</
 syn match vOperator /\V++/
@@ -64,10 +73,11 @@ syn match vOperator /\V:=/ skipwhite skipempty nextgroup=vBlockMap
 " ==============================================================================
 " {{{
 
-syn keyword vType      bool byte byteptr rune string voidptr nextgroup=vBlockTypecast
-syn keyword vInts      int i8 u8 i16 u16 i32 u32 i64 u64     nextgroup=vBlockTypecast
-syn keyword vFloats    f32 f64                               nextgroup=vBlockTypecast
-syn keyword vStructure enum struct
+syn keyword vType       bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
+syn keyword vInts       int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBlockTypecast
+syn keyword vFloats     f32 f64                                nextgroup=vBlockTypecast
+syn keyword vEnum       enum                                   nextgroup=vEnumName
+syn keyword vStruct     struct                                 nextgroup=vStructName
 
 " }}}
 " ==============================================================================
@@ -98,33 +108,33 @@ syn region vInterpolation      contained containedin=vString matchgroup=vSimpleI
 " ==============================================================================
 " {{{
 
-syn keyword vKeyword      break
-syn keyword vKeyword      const     skipwhite skipempty nextgroup=vBlockConst
-syn keyword vKeyword      continue
-syn keyword vKeyword      fn
-syn keyword vKeyword      import
-syn keyword vKeyword      len
-syn keyword vKeyword      map
-syn keyword vKeyword      match
-syn keyword vKeyword      module
-syn keyword vKeyword      mut
-syn keyword vKeyword      return
-syn keyword vConditional  else      skipwhite skipempty nextgroup=vBlockElse
-syn keyword vConditional  if        skipwhite skipempty nextgroup=vCondition
-syn keyword vConditional  or        skipwhite skipempty nextgroup=vBlockElse
-syn keyword vConditional  switch
-syn keyword vRepeat       for
-syn keyword vRepeat       in
-syn keyword vLabel        case
-syn keyword vLabel        default
-syn keyword vPub          pub
+syn keyword vKeyword           break
+syn keyword vKeyword           const     skipwhite skipempty nextgroup=vBlockConst
+syn keyword vKeyword           continue
+syn keyword vKeyword           fn
+syn keyword vKeyword           import
+syn keyword vKeyword           len
+syn keyword vKeyword           map
+syn keyword vKeyword           match     skipwhite skipempty nextgroup=vMatchedVar
+syn keyword vKeyword           module
+syn keyword vKeyword           mut
+syn keyword vKeyword           return
+syn keyword vConditional       else      skipwhite skipempty nextgroup=vBlockElse
+syn keyword vConditional       if        skipwhite skipempty nextgroup=vCondition
+syn keyword vConditional       or        skipwhite skipempty nextgroup=vBlockElse
+syn keyword vConditional       switch
+syn keyword vRepeat            for
+syn keyword vRepeat            in
+syn keyword vPub               pub
 
 " Pre-compilaton conditionals
-syn region  vPreCond      start=/\V$if/ end=/\v$/ transparent
-syn match   vPreCondIf    /\V$if/                 contained containedin=vPreCond
-syn match   vPreCondElse  /\V$else/
-syn keyword vOS           linux mac windows       contained containedin=vPreCond
-syn keyword vDebug        debug                   contained containedin=vPreCond
+syn match   vPreCondStatement  /\v\$(if|else)/
+syn region  vPreCond           start=/\V$if/ end=/\v$/ transparent
+syn keyword vOS                linux mac windows       contained containedin=vPreCond
+syn keyword vDebug             debug                   contained containedin=vPreCond
+
+" C-style pre-proc
+" @TODO
 
 " }}}
 " ==============================================================================
@@ -132,9 +142,9 @@ syn keyword vDebug        debug                   contained containedin=vPreCond
 " ==============================================================================
 " {{{
 
-syn match vMapKey     /\v^\s*\w:/he=e-1        contained containedin=vBlockMap
-syn match vConstName  /\v^\s*\w+\s*\=/he=e-1   contained containedin=vBlockConst
-syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1  contained containedin=vBlockMatch
+syn match vMapKey      /\v^\s*\w+\s*:[^=]/he=e-2
+syn match vConstName   /\v^\s*\w+\s*\=/he=e-1      contained containedin=vBlockConst
+syn match vMatchLabel  /\v\.?\w+\s*\{@=/he=e-1     contained containedin=vBlockMatch skipwhite skipempty nextgroup=vBlockMatchBranch
 
 " }}}
 " ==============================================================================
@@ -142,10 +152,10 @@ syn match vMatchLabel /\v\.?\w+\s*\{@=/he=e-1  contained containedin=vBlockMatch
 " ==============================================================================
 " {{{
 
-syn match vFunctionCall        /\v @1<=\w+\(/he=e-1         nextgroup=vBlockArgs
-syn match vMethodCall          /\v\.\w+\(/hs=s+1,he=e-1     nextgroup=vBlockArgs
-syn match vFunctionDeclaration /\v(fn)@2<= \w+/             nextgroup=vBlockParams
-syn match vMethodDeclaration   /\v(fn \(\w+ \w+\))@<= \w+/  nextgroup=vBlockParams
+syn match vFunctionCall         /\v @1<=\w+\(/he=e-1          nextgroup=vBlockFuncArgs
+syn match vMethodCall           /\v\.\w+\(/hs=s+1,he=e-1      nextgroup=vBlockFuncArgs
+syn match vFunctionDeclaration  /\v(fn)@2<= \w+/              nextgroup=vBlockFuncParams
+syn match vMethodDeclaration    /\v(fn \(\w+ \w+\))@<= \w+/   nextgroup=vBlockFuncParams
 
 " }}}
 " ==============================================================================
@@ -178,7 +188,7 @@ syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
 " ==============================================================================
 " {{{
 
-syn match vComment "\v//.*$"
+syn match  vComment          "\v//.*$"
 syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
 
 syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
@@ -196,6 +206,7 @@ hi link   vComment               Comment
 hi link   vConditional           Conditional
 hi link   vConstName             Identifier
 hi link   vDebug                 Debug
+hi link   vEnum                  Structure
 hi link   vFloats                Type
 hi link   vFunctionCall          Function
 hi link   vFunctionDeclaration   Title
@@ -211,12 +222,12 @@ hi link   vMultiLineComment      Comment
 hi link   vNumber                Number
 hi link   vOS                    PreCondit
 hi link   vOperator              Operator
-hi link   vPreCondIf             PreCondit
+hi link   vPreCondStatement      PreCondit
 hi link   vPub                   Special
 hi link   vRepeat                Repeat
 hi link   vSimpleInterpolation   Special
 hi link   vString                String
-hi link   vStructure             Structure
+hi link   vStruct                Structure
 hi link   vTodo                  Todo
 hi link   vType                  Type
 hi link   vWarning               Error
