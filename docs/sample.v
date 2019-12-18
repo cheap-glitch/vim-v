@@ -86,6 +86,8 @@ r"raw string"
 "complex interpolation #1: ${var}"
 'complex interpolation #2: ${foo() > 2}'
 "complex interpolation #2: ${foo() > 2}"
+'complex interpolation #3: ${if time == true { time.now() } else { "time is an illusion!" }}'
+"complex interpolation #3: ${if time == true { time.now() } else { "time is an illusion!" }}"
 
 // Statements
 // @TODO

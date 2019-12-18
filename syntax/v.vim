@@ -84,9 +84,9 @@ syn keyword vStruct   struct                                 nextgroup=vStructNa
 " ==============================================================================
 " {{{
 
-syn match vNumber     /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
-syn match vCharacter  /\v`.`/
-syn keyword vBoolean  true false
+syn match   vNumber     /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
+syn match   vCharacter  /\v`.`/
+syn keyword vBoolean    true false
 
 " }}}
 " ==============================================================================
@@ -94,15 +94,16 @@ syn keyword vBoolean  true false
 " ==============================================================================
 " {{{
 
-syn region vString start=/\vr?'/ end=/\v'/
-syn region vString start=/\vr?"/ end=/\v"/
+syn region  vString                        start=/\vr?'/ end=/\v'/
+syn region  vString                        start=/\vr?"/ end=/\v"/
 
 " Escape sequences
-syn match  vEscapeSequence      contained containedin=vString  /\v\\[nrst\"'$]/
+syn match   vEscapeSequence                contained containedin=vString  /\v\\[nrst\"'$]/
 
 " String interpolations
-syn match  vInterpolationVar    contained containedin=vString  /\v\$\w+/
-syn region vInterpolationBlock  contained containedin=vString  matchgroup=vEscapeSequence start=/\V${/ end=/\V}/  contains=vNumber,vOperator,vFunctionCall
+syn match   vInterpolationVar              contained containedin=vString  /\v\$\w+/
+syn region  vInterpolationBlock            contained containedin=vString  matchgroup=vEscapeSequence start=/\V${/ end=/\V}/  contains=@vInterpolationBlockContained
+syn cluster vInterpolationBlockContained   contains=vOperator,vNumber,vCharacter,vBoolean,vString,vKeyword,vConditional,vRepeat,vFunctionCall,vMethodCall
 
 " }}}
 " ==============================================================================
