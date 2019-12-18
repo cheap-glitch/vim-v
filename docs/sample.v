@@ -156,6 +156,14 @@ $if linux {
 $else {
 }
 
+// C-style pre-proc
+#include <file.h>
+#include "file.h"
+#define  CONST
+#ifdef   CONST
+#ifndef  CONS
+#endif
+
 // Warnings
 mut var := 'No semicolons at the end of statements!';
 if true { mut var := 'No semicolons at the end of statements!'; }

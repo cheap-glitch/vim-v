@@ -64,7 +64,7 @@ syn match vOperator /\V>/
 syn match vOperator /\V</
 syn match vOperator /\V=/
 syn match vOperator /\V:=/ skipwhite skipempty nextgroup=vBlockMap
-syn match vOperator /\V\sin\s/
+syn match vOperator /\v(^|\s)in(\s|$)/
 
 " }}}
 " ==============================================================================
@@ -84,7 +84,7 @@ syn keyword vStruct   struct                                 nextgroup=vStructNa
 " ==============================================================================
 " {{{
 
-syn match   vNumber     /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
+syn match   vNumber     /\v([a-zA-Z_:]\d*)@<!\d+(\.(\d+)?)?/
 syn match   vCharacter  /\v`.`/
 syn keyword vBoolean    true false
 
@@ -94,16 +94,17 @@ syn keyword vBoolean    true false
 " ==============================================================================
 " {{{
 
-syn region  vString                        start=/\vr?'/ end=/\v'/
-syn region  vString                        start=/\vr?"/ end=/\v"/
+syn region  vString  start=/\vr?'/ end=/\v'/
+syn region  vString  start=/\vr?"/ end=/\v"/
 
 " Escape sequences
-syn match   vEscapeSequence                contained containedin=vString  /\v\\[nrst\"'$]/
+syn match   vEscapeSequence      /\v\\[nrst\"'$]/                                   contained containedin=vString
 
 " String interpolations
-syn match   vInterpolationVar              contained containedin=vString  /\v\$\w+/
-syn region  vInterpolationBlock            contained containedin=vString  matchgroup=vEscapeSequence start=/\V${/ end=/\V}/  contains=@vInterpolationBlockContained
-syn cluster vInterpolationBlockContained   contains=vOperator,vNumber,vCharacter,vBoolean,vString,vKeyword,vConditional,vRepeat,vFunctionCall,vMethodCall
+syn match   vInterpolationVar    /\v\$\w+/                                          contained containedin=vString
+syn region  vInterpolationBlock  matchgroup=vEscapeSequence start=/\V${/ end=/\V}/  contained containedin=vString  contains=@vInterpolationBlockContained
+
+syn cluster vInterpolationBlockContained  contains=vOperator,vNumber,vCharacter,vBoolean,vString,vKeyword,vConditional,vRepeat,vFunctionCall,vMethodCall
 
 " }}}
 " ==============================================================================
@@ -126,7 +127,7 @@ syn keyword vConditional  else      skipwhite skipempty nextgroup=vBlockElse
 syn keyword vConditional  if        skipwhite skipempty nextgroup=vCondition
 syn keyword vConditional  or        skipwhite skipempty nextgroup=vBlockElse
 syn keyword vRepeat       for
-syn keyword vPub          pub
+syn keyword vExport       pub
 
 " }}}
 " ==============================================================================
@@ -168,13 +169,15 @@ syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
 " ==============================================================================
 " {{{
 
-syn match   vPreProcIf    /\V$if /            skipwhite skipempty nextgroup=vOS,vDebug,vCondition
-syn match   vPreProcElse  /\V$else/           skipwhite skipempty nextgroup=vBlockElse
-syn keyword vOS           linux mac windows   contained skipwhite skipempty nextgroup=vBlockIf
-syn keyword vDebug        debug               contained skipwhite skipempty nextgroup=vBlockIf
+syn match   vPreProcIf    /\V$if /                                       skipwhite skipempty nextgroup=vOS,vDebug,vCondition
+syn match   vPreProcElse  /\V$else/                                      skipwhite skipempty nextgroup=vBlockElse
+syn keyword vOS           linux mac windows                    contained skipwhite skipempty nextgroup=vBlockIf
+syn keyword vDebug        debug                                contained skipwhite skipempty nextgroup=vBlockIf
 
 " C-style pre-proc
-" @TODO
+syn match   cPreProc      /\v#(include|define|ifn?def|endif)/            skipwhite skipempty nextgroup=cConstName,cHeaderName
+syn match   cConstName    /\v\w+/                              contained
+syn match   cHeaderName   /\v\<\w+\.h\>/                       contained
 
 " }}}
 " ==============================================================================
@@ -239,12 +242,16 @@ hi link   vOS                         PreCondit
 hi link   vOperator                   Operator
 hi link   vPreProcElse                PreCondit
 hi link   vPreProcIf                  PreCondit
-hi link   vPub                        Special
+hi link   vExport                     Special
 hi link   vRepeat                     Repeat
 hi link   vString                     String
 hi link   vStruct                     Structure
 hi link   vTodo                       Todo
 hi link   vType                       Type
 hi link   vWarning                    Error
+
+hi link   cPreProc                    PreCondit
+hi link   cConstName                  Identifier
+hi link   cHeaderName                 Identifier
 
 " }}}
