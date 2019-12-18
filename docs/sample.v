@@ -74,10 +74,18 @@ r"raw string"
 "simple quotes should be ignored here: ''''"
 'escape sequences: \n \r \t \' \$ \\'
 "escape sequences: \n \r \t \" \$ \\"
-'tricky escape sequence n°1: \\'
-'tricky escape sequence n°2: \\\''
-"tricky escape sequence n°1: \\"
-"tricky escape sequence n°2: \\\""
+'tricky escape sequence #1: \\'
+"tricky escape sequence #1: \\"
+'tricky escape sequence #2: \\\''
+"tricky escape sequence #2: \\\""
+'simple interpolation: $var'
+"simple interpolation: $var"
+'escaped interpolation: \$var'
+"escaped interpolation: \$var"
+'complex interpolation #1: ${var}'
+"complex interpolation #1: ${var}"
+'complex interpolation #2: ${foo() > 2}'
+"complex interpolation #2: ${foo() > 2}"
 
 // Statements
 // @TODO

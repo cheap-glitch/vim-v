@@ -72,11 +72,11 @@ syn match vOperator /\V\sin\s/
 " ==============================================================================
 " {{{
 
-syn keyword vType       bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
-syn keyword vInts       int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBlockTypecast
-syn keyword vFloats     f32 f64                                nextgroup=vBlockTypecast
-syn keyword vEnum       enum                                   nextgroup=vEnumName
-syn keyword vStruct     struct                                 nextgroup=vStructName
+syn keyword vType     bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
+syn keyword vInts     int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBlockTypecast
+syn keyword vFloats   f32 f64                                nextgroup=vBlockTypecast
+syn keyword vEnum     enum                                   nextgroup=vEnumName
+syn keyword vStruct   struct                                 nextgroup=vStructName
 
 " }}}
 " ==============================================================================
@@ -84,9 +84,9 @@ syn keyword vStruct     struct                                 nextgroup=vStruct
 " ==============================================================================
 " {{{
 
-syn match vNumber    /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
-syn match vCharacter /\v`.`/
-syn keyword vBoolean true false
+syn match vNumber     /\v([a-zA-Z_]\d*)@<!\d+(\.(\d+)?)?/
+syn match vCharacter  /\v`.`/
+syn keyword vBoolean  true false
 
 " }}}
 " ==============================================================================
@@ -94,17 +94,15 @@ syn keyword vBoolean true false
 " ==============================================================================
 " {{{
 
-" syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@1<!\\'/
-" syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@1<!\\"/
 syn region vString start=/\vr?'/ end=/\v'/
 syn region vString start=/\vr?"/ end=/\v"/
 
 " Escape sequences
-syn match  vEscapeSequence      /\v\\[nrst\"'$]/                              contained containedin=vString
+syn match  vEscapeSequence      contained containedin=vString  /\v\\[nrst\"'$]/
 
 " String interpolations
-syn match  vInterpolationVar    /\v(\\)@1<!\$\w+/                             contained containedin=vString
-syn region vInterpolationBlock  start=/\v(\\)@1<!\$\{/ end=/\V}/  transparent contained containedin=vString matchgroup=vInterpolationBlockBounds
+syn match  vInterpolationVar    contained containedin=vString  /\v\$\w+/
+syn region vInterpolationBlock  contained containedin=vString  matchgroup=vEscapeSequence start=/\V${/ end=/\V}/  contains=vNumber,vOperator,vFunctionCall
 
 " }}}
 " ==============================================================================
@@ -146,7 +144,7 @@ syn match vMatchLabel  /\v\.?\w+\s*\{@=/he=e-1     contained containedin=vBlockM
 " ==============================================================================
 " {{{
 
-syn match vFunctionCall         /\v @1<=\w+\(/he=e-1          nextgroup=vBlockFuncArgs
+syn match vFunctionCall         /\v[ {]@1<=\w+\(/he=e-1       nextgroup=vBlockFuncArgs
 syn match vMethodCall           /\v\.\w+\(/hs=s+1,he=e-1      nextgroup=vBlockFuncArgs
 syn match vFunctionDeclaration  /\v(fn)@2<= \w+/              nextgroup=vBlockFuncParams
 syn match vMethodDeclaration    /\v(fn \(\w+ \w+\))@<= \w+/   nextgroup=vBlockFuncParams
