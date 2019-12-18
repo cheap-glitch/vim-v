@@ -54,10 +54,30 @@ point := Point{
 }
 
 // Constants
-// @TODO
+const (
+	pi    = 3.14
+	world = '世界'
+)
 
 // Strings
-// @TODO
+'simple string'
+"simple string"
+r'raw string'
+r"raw string"
+'mutli
+ line
+ strings'
+"mutli
+ line
+ strings"
+'double quotes should be ignored here: """"'
+"simple quotes should be ignored here: ''''"
+'escape sequences: \n \r \t \' \$ \\'
+"escape sequences: \n \r \t \" \$ \\"
+'tricky escape sequence n°1: \\'
+'tricky escape sequence n°2: \\\''
+"tricky escape sequence n°1: \\"
+"tricky escape sequence n°2: \\\""
 
 // Statements
 // @TODO

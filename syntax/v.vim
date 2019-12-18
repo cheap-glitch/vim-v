@@ -94,12 +94,17 @@ syn keyword vBoolean true false
 " ==============================================================================
 " {{{
 
-syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@1<!\\'/
-syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@1<!\\"/
+" syn region vString start=/\vr?'/ end=/\v'/ skip=/\v(\\)@1<!\\'/
+" syn region vString start=/\vr?"/ end=/\v"/ skip=/\v(\\)@1<!\\"/
+syn region vString start=/\vr?'/ end=/\v'/
+syn region vString start=/\vr?"/ end=/\v"/
+
+" Escape sequences
+syn match  vEscapeSequence      /\v\\[nrst\"'$]/                              contained containedin=vString
 
 " String interpolations
-syn match vSimpleInterpolation contained containedin=vString /\v(\\)@1<!\$\w+/
-syn region vInterpolation      contained containedin=vString matchgroup=vSimpleInterpolation start=/\v(\\)@1<!\$\{/ end=/\V}/
+syn match  vInterpolationVar    /\v(\\)@1<!\$\w+/                             contained containedin=vString
+syn region vInterpolationBlock  start=/\v(\\)@1<!\$\{/ end=/\V}/  transparent contained containedin=vString matchgroup=vInterpolationBlockBounds
 
 " }}}
 " ==============================================================================
@@ -208,38 +213,40 @@ syn keyword vTodo TODO FIXME contained containedin=vComment,vMultiLineComment
 " ==============================================================================
 " {{{
 
-hi link   vBoolean               Boolean
-hi link   vBuiltInModule         Function
-hi link   vCharacter             Character
-hi link   vComment               Comment
-hi link   vConditional           Conditional
-hi link   vConstName             Identifier
-hi link   vDebug                 Debug
-hi link   vEnum                  Structure
-hi link   vFloats                Type
-hi link   vFunctionCall          Function
-hi link   vFunctionDeclaration   Title
-hi link   vInts                  Type
-hi link   vKeyword               Keyword
-hi link   vLabel                 Label
-hi link   vMapKey                Identifier
-hi link   vMatchLabel            Identifier
-hi link   vMethodCall            Function
-hi link   vMethodDeclaration     Title
-hi link   vModuleName            Identifier
-hi link   vMultiLineComment      Comment
-hi link   vNumber                Number
-hi link   vOS                    PreCondit
-hi link   vOperator              Operator
-hi link   vPreProcElse           PreCondit
-hi link   vPreProcIf             PreCondit
-hi link   vPub                   Special
-hi link   vRepeat                Repeat
-hi link   vSimpleInterpolation   Special
-hi link   vString                String
-hi link   vStruct                Structure
-hi link   vTodo                  Todo
-hi link   vType                  Type
-hi link   vWarning               Error
+hi link   vBoolean                    Boolean
+hi link   vBuiltInModule              Function
+hi link   vCharacter                  Character
+hi link   vComment                    Comment
+hi link   vConditional                Conditional
+hi link   vConstName                  Identifier
+hi link   vDebug                      Debug
+hi link   vEnum                       Structure
+hi link   vEscapeSequence             Special
+hi link   vFloats                     Type
+hi link   vFunctionCall               Function
+hi link   vFunctionDeclaration        Title
+hi link   vInterpolationBlockBounds   Special
+hi link   vInterpolationVar           Special
+hi link   vInts                       Type
+hi link   vKeyword                    Keyword
+hi link   vLabel                      Label
+hi link   vMapKey                     Identifier
+hi link   vMatchLabel                 Identifier
+hi link   vMethodCall                 Function
+hi link   vMethodDeclaration          Title
+hi link   vModuleName                 Identifier
+hi link   vMultiLineComment           Comment
+hi link   vNumber                     Number
+hi link   vOS                         PreCondit
+hi link   vOperator                   Operator
+hi link   vPreProcElse                PreCondit
+hi link   vPreProcIf                  PreCondit
+hi link   vPub                        Special
+hi link   vRepeat                     Repeat
+hi link   vString                     String
+hi link   vStruct                     Structure
+hi link   vTodo                       Todo
+hi link   vType                       Type
+hi link   vWarning                    Error
 
 " }}}
