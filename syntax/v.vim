@@ -175,12 +175,18 @@ syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
 " Warnings
 " ==============================================================================
 " {{{
+"
+if !exists("g:v_warnings")
+	let g:v_warnings=0
+endif
 
-" Highlight lines containing statements ending with semicolons
-syn match vWarning /\v.*;(\s*}|$)/
+if g:v_warnings
+	" Highlight lines containing statements ending with semicolons
+	syn match vWarning /\v.*;(\s*}|$)/
 
-" Highlight conditions surrounded by parentheses
-syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
+	" Highlight conditions surrounded by parentheses
+	syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
+endif
 
 " }}}
 " ==============================================================================
