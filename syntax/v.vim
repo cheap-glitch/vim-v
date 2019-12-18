@@ -62,10 +62,9 @@ syn match vOperator "\V/"
 syn match vOperator /\V%/
 syn match vOperator /\V>/
 syn match vOperator /\V</
-syn match vOperator /\V++/
-syn match vOperator /\V--/
-syn match vOperator /\v[=!<>*/+-]?\=/
+syn match vOperator /\V=/
 syn match vOperator /\V:=/ skipwhite skipempty nextgroup=vBlockMap
+syn match vOperator /\V\sin\s/
 
 " }}}
 " ==============================================================================
@@ -108,33 +107,23 @@ syn region vInterpolation      contained containedin=vString matchgroup=vSimpleI
 " ==============================================================================
 " {{{
 
-syn keyword vKeyword           break
-syn keyword vKeyword           const     skipwhite skipempty nextgroup=vBlockConst
-syn keyword vKeyword           continue
-syn keyword vKeyword           fn
-syn keyword vKeyword           import
-syn keyword vKeyword           len
-syn keyword vKeyword           map
-syn keyword vKeyword           match     skipwhite skipempty nextgroup=vMatchedVar
-syn keyword vKeyword           module
-syn keyword vKeyword           mut
-syn keyword vKeyword           return
-syn keyword vConditional       else      skipwhite skipempty nextgroup=vBlockElse
-syn keyword vConditional       if        skipwhite skipempty nextgroup=vCondition
-syn keyword vConditional       or        skipwhite skipempty nextgroup=vBlockElse
-syn keyword vConditional       switch
-syn keyword vRepeat            for
-syn keyword vRepeat            in
-syn keyword vPub               pub
-
-" Pre-compilaton conditionals
-syn match   vPreCondStatement  /\v\$(if|else)/
-syn region  vPreCond           start=/\V$if/ end=/\v$/ transparent
-syn keyword vOS                linux mac windows       contained containedin=vPreCond
-syn keyword vDebug             debug                   contained containedin=vPreCond
-
-" C-style pre-proc
-" @TODO
+syn keyword vKeyword      break
+syn keyword vKeyword      const     skipwhite skipempty nextgroup=vBlockConst
+syn keyword vKeyword      continue
+syn keyword vKeyword      fn
+syn keyword vKeyword      import
+syn keyword vKeyword      len
+syn keyword vKeyword      map
+syn keyword vKeyword      match     skipwhite skipempty nextgroup=vMatchedVar
+syn keyword vKeyword      module
+syn keyword vKeyword      mut
+syn keyword vKeyword      return
+syn keyword vConditional  else      skipwhite skipempty nextgroup=vBlockElse
+syn keyword vConditional  if        skipwhite skipempty nextgroup=vCondition
+syn keyword vConditional  or        skipwhite skipempty nextgroup=vBlockElse
+syn keyword vConditional  switch
+syn keyword vRepeat       for
+syn keyword vPub          pub
 
 " }}}
 " ==============================================================================
@@ -169,6 +158,20 @@ syn keyword vBuiltInModule os
 
 " User-defined
 syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
+
+" }}}
+" ==============================================================================
+" Pre-proc
+" ==============================================================================
+" {{{
+
+syn match   vPreProcIf    /\V$if /            skipwhite skipempty nextgroup=vOS,vDebug,vCondition
+syn match   vPreProcElse  /\V$else/           skipwhite skipempty nextgroup=vBlockElse
+syn keyword vOS           linux mac windows   contained skipwhite skipempty nextgroup=vBlockIf
+syn keyword vDebug        debug               contained skipwhite skipempty nextgroup=vBlockIf
+
+" C-style pre-proc
+" @TODO
 
 " }}}
 " ==============================================================================
@@ -228,7 +231,8 @@ hi link   vMultiLineComment      Comment
 hi link   vNumber                Number
 hi link   vOS                    PreCondit
 hi link   vOperator              Operator
-hi link   vPreCondStatement      PreCondit
+hi link   vPreProcElse           PreCondit
+hi link   vPreProcIf             PreCondit
 hi link   vPub                   Special
 hi link   vRepeat                Repeat
 hi link   vSimpleInterpolation   Special
