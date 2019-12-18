@@ -1,10 +1,8 @@
-<div align="center">
-	<h1>vim-v</h1>
-</div>
+<div align="center"><h1>vim-v</h1></div>
 <img src="https://raw.githubusercontent.com/cheap-glitch/vim-v/master/docs/screenshot.png" alt="code sample">
 <p align="right"><em><sub>
 	colorscheme: <a href="https://github.com/cocopon/iceberg.vim">Iceberg</a>
-	&nbsp;&bullet;&nbsp;
+	&nbsp;|&nbsp;
 	font: <a href="http://sourcefoundry.org/hack">Hack</a>
 </sub></em></p>
 <p>&nbsp;</p>
