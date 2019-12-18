@@ -94,7 +94,8 @@ r"raw string"
 "complex interpolation #3: ${if time == true { time.now() } else { "time is an illusion!" }}"
 
 // Statements
-mut bar := map[string]int
+mut bar    := map[string]int
+mut foo123 := `?`
 
 if baz >= foo("text") {
 }
@@ -109,6 +110,11 @@ for nb in [1, 2, 3] {
 }
 
 // Labels
+mut numbers := {
+	one: 1
+	two: 2
+}
+
 match music {
 	.rock    { println(rune(`🎸`))) }
 	.metal   { println(`🤘`)        }

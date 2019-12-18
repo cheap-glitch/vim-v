@@ -144,7 +144,7 @@ syn match vMatchLabel  /\v\.?\w+\s*\{@=/he=e-1     contained containedin=vBlockM
 " ==============================================================================
 " {{{
 
-syn match vFunctionCall         /\v[ {]@1<=\w+\(/he=e-1       nextgroup=vBlockFuncArgs
+syn match vFunctionCall         /\v\w+\(/he=e-1               nextgroup=vBlockFuncArgs
 syn match vMethodCall           /\v\.\w+\(/hs=s+1,he=e-1      nextgroup=vBlockFuncArgs
 syn match vFunctionDeclaration  /\v(fn)@2<= \w+/              nextgroup=vBlockFuncParams
 syn match vMethodDeclaration    /\v(fn \(\w+ \w+\))@<= \w+/   nextgroup=vBlockFuncParams
