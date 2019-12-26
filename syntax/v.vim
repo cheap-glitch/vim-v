@@ -112,6 +112,7 @@ syn cluster vInterpolationBlockContained  contains=vOperator,vNumber,vCharacter,
 " ================================================================================
 " {{{
 
+syn keyword vKeyword      assert
 syn keyword vKeyword      break
 syn keyword vKeyword      const     skipwhite skipempty nextgroup=vBlockConst
 syn keyword vKeyword      continue
