@@ -171,18 +171,19 @@ syn match vModuleName /\v((^import)@7<=|(^module)@7<=) (\w|\.)+/
 " ================================================================================
 " {{{
 
-syn match   vPreProcIf    /\V$if /                                       skipwhite skipempty nextgroup=vOS,vDebug,vCondition
-syn match   vPreProcElse  /\V$else/                                      skipwhite skipempty nextgroup=vBlockElse
-syn keyword vOS           linux mac windows                    contained skipwhite skipempty nextgroup=vBlockIf
-syn keyword vDebug        debug                                contained skipwhite skipempty nextgroup=vBlockIf
+syn match   vPreProcIf       /\V$if /                                           skipwhite skipempty nextgroup=vOS,vDebug,vCondition
+syn match   vPreProcElse     /\V$else/                                          skipwhite skipempty nextgroup=vBlockElse
+syn keyword vOS              linux mac windows                        contained skipwhite skipempty nextgroup=vBlockIf
+syn keyword vDebug           debug                                    contained skipwhite skipempty nextgroup=vBlockIf
 
-" Special labels
-syn match   vSpecialLabel /\v\[(inline|live)\]/
+" Special markers
+syn match   vSpecialMarkers  /\v\[(inline|live)\]/
 
 " C-style pre-proc
-syn match   cPreProc      /\v#(include|define|ifn?def|endif)/            skipwhite skipempty nextgroup=cConstName,cHeaderName
-syn match   cConstName    /\v\w+/                              contained
-syn match   cHeaderName   /\v\<\w+\.h\>/                       contained
+syn match   cPreProc         /\v#(include|define|ifn?def|endif|flag)/           skipwhite skipempty nextgroup=cConstName,cHeaderName,cCompilationFlag
+syn match   cConstName       /\v\w+/                                  contained
+syn match   cHeaderName      /\v\<\w+\.h\>/                           contained
+syn match   cCompilationFlag /\v-\w+/                                 contained
 
 " }}}
 " ================================================================================
@@ -252,12 +253,13 @@ hi link   vRepeat                     Repeat
 hi link   vString                     String
 hi link   vStruct                     Structure
 hi link   vTodo                       Todo
-hi link   vSpecialLabel               Special
+hi link   vSpecialMarkers             Special
 hi link   vType                       Type
 hi link   vWarning                    Error
 
 hi link   cPreProc                    PreCondit
 hi link   cConstName                  Identifier
 hi link   cHeaderName                 Identifier
+hi link   cCompilationFlag            Identifier
 
 " }}}

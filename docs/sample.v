@@ -164,6 +164,7 @@ $else {
 #ifdef   CONST
 #ifndef  CONS
 #endif
+#flag -lsqlite3
 
 // Warnings
 mut var := 'No semicolons at the end of statements!';
