@@ -176,6 +176,9 @@ syn match   vPreProcElse  /\V$else/                                      skipwhi
 syn keyword vOS           linux mac windows                    contained skipwhite skipempty nextgroup=vBlockIf
 syn keyword vDebug        debug                                contained skipwhite skipempty nextgroup=vBlockIf
 
+" Special labels
+syn match   vSpecialLabel /\v\[(inline|live)\]/
+
 " C-style pre-proc
 syn match   cPreProc      /\v#(include|define|ifn?def|endif)/            skipwhite skipempty nextgroup=cConstName,cHeaderName
 syn match   cConstName    /\v\w+/                              contained
@@ -249,6 +252,7 @@ hi link   vRepeat                     Repeat
 hi link   vString                     String
 hi link   vStruct                     Structure
 hi link   vTodo                       Todo
+hi link   vSpecialLabel               Special
 hi link   vType                       Type
 hi link   vWarning                    Error
 

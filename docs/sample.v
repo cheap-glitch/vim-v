@@ -138,6 +138,15 @@ import gg
 import math
 import sld.ttf as ttf
 
+// Special labels
+[live]
+fn print_message() {
+}
+
+[inline]
+fn inline_func() {
+}
+
 // Pre-proc
 $if condition {
 }
