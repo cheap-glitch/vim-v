@@ -1,12 +1,3 @@
-
-/**
- * docs/sample.v
- *
- * NOTE:
- *   This is not a valid V sourcefile, but  a sample of arbitrary
- *   code to test the syntax highlighting and associated features
- */
-
 // Operators
 +
 ++
@@ -145,6 +136,7 @@ module mymodule
 import os
 import gg
 import math
+import sld.ttf as ttf
 
 // Pre-proc
 $if condition {
