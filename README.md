@@ -36,7 +36,7 @@ If you use _vim-plug_, you can do something like this:
 Plug 'cheap-glitch/vim-v', { 'for': 'v' }
 ```
 
-#### Activating warnings for invalid C-like syntax
+#### Display warnings for invalid C-like syntax
 
 The syntax of V is very similar to that of C and C-like languages, but there are
 nonetheless  some significant  differences. To  help you  avoid using  invalid C
