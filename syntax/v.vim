@@ -163,7 +163,7 @@ syn keyword vBuiltInModule math
 syn keyword vBuiltInModule os
 
 " User-defined
-syn match vModuleName /\v((^import)@7<=|(^module)@7<=) \w+/
+syn match vModuleName /\v((^import)@7<=|(^module)@7<=) (\w|\.)+/
 
 " }}}
 " ================================================================================
