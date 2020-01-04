@@ -28,6 +28,14 @@ call plug#end()
 ```
 Then reload your _vimrc_ and run `:PlugInstall`.
 
+#### Conditional loading with vim-plug
+
+If you use _vim-plug_, you can do something like this:
+```vim
+" This will only load the syntax plugin when a .v file is first opened
+Plug 'cheap-glitch/vim-v', { 'for': 'v' }
+```
+
 #### Activating warnings for invalid C-like syntax
 
 The syntax of V is very similar to that of C and C-like languages, but there are
