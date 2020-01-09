@@ -45,9 +45,9 @@ syn region vBlockTypecast       start=/\V(/   end=/\V)/        transparent conta
 
 syn match  vCondition           /\v.+(\{)@=/                   transparent contained skipwhite skipempty nextgroup=vBlockIf
 syn match  vEnumName            /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockEnum
-syn match  vStructName          /\v(\w|\.)+/                   transparent contained skipwhite skipempty nextgroup=vBlockStruct
+syn match  vStructName          /\v(\w|[.<>])+/                transparent contained skipwhite skipempty nextgroup=vBlockStruct
 syn match  vMatchedVar          /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockMatch
-syn match  vReturnType          /\v\w+/                        transparent contained skipwhite skipwhite nextgroup=vBlockFunction
+syn match  vReturnType          /\v(\w|[<>])+/                 transparent contained skipwhite skipwhite nextgroup=vBlockFunction
 
 " }}}
 " ================================================================================
@@ -72,11 +72,12 @@ syn match vOperator /\v(^|\s)in(\s|$)/
 " ================================================================================
 " {{{
 
-syn keyword vType     bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
-syn keyword vInts     int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBlockTypecast
-syn keyword vFloats   f32 f64                                nextgroup=vBlockTypecast
-syn keyword vEnum     enum                                   nextgroup=vEnumName
-syn keyword vStruct   struct                                 nextgroup=vStructName
+syn keyword vType         bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
+syn keyword vInts         int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBlockTypecast
+syn keyword vFloats       f32 f64                                nextgroup=vBlockTypecast
+syn keyword vEnum         enum                                   skipwhite nextgroup=vEnumName
+syn keyword vStruct       struct                                 skipwhite nextgroup=vStructName
+syn match   vGenericType  /\v\<\w+\>/                            contained containedin=vStructName,vFunctionDeclaration,vReturnType
 
 " }}}
 " ================================================================================
@@ -148,10 +149,10 @@ syn match vMatchLabel  /\v\.?\w+\s*\{@=/he=e-1     contained containedin=vBlockM
 " ================================================================================
 " {{{
 
-syn match vFunctionCall         /\v\w+\(/he=e-1               nextgroup=vBlockFuncArgs
-syn match vMethodCall           /\v\.\w+\(/hs=s+1,he=e-1      nextgroup=vBlockFuncArgs
-syn match vFunctionDeclaration  /\v(fn)@2<= \w+/              nextgroup=vBlockFuncParams
-syn match vMethodDeclaration    /\v(fn \(\w+ \w+\))@<= \w+/   nextgroup=vBlockFuncParams
+syn match vFunctionCall         /\v\w+\(/he=e-1                      nextgroup=vBlockFuncArgs
+syn match vMethodCall           /\v\.\w+\(/hs=s+1,he=e-1             nextgroup=vBlockFuncArgs
+syn match vFunctionDeclaration  /\v(fn)@2<= (\w|[<>])+/              nextgroup=vBlockFuncParams
+syn match vMethodDeclaration    /\v(fn \(\w+ (\w|[<>])+\))@<= \w+/   nextgroup=vBlockFuncParams
 
 " }}}
 " ================================================================================
@@ -257,6 +258,7 @@ hi link   vTodo                       Todo
 hi link   vSpecialMarkers             Special
 hi link   vType                       Type
 hi link   vWarning                    Error
+hi link   vGenericType                Special
 
 hi link   cPreProc                    PreCondit
 hi link   cConstName                  Identifier
