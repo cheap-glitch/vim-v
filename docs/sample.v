@@ -1,4 +1,12 @@
-// Operators
+
+/**
+ * docs/sample.v
+ */
+
+/**
+ * Operators
+ * -----------------------------------------------------------------------------
+ */
 +
 ++
 +=
@@ -20,19 +28,28 @@
 :=
 in
 
-// Basic types
+/**
+ * Basic types
+ * -----------------------------------------------------------------------------
+ */
 bool byte byteptr rune string voidptr
 int i8 u8 i16 u16 i32 u32 i64 u64
 f32 f64
 
-// Enums
+/**
+ * Enums
+ * -----------------------------------------------------------------------------
+ */
 enum Color {
 	mauve
 	viridian
 	steel
 }
 
-// Structs
+/**
+ * Structs
+ * -----------------------------------------------------------------------------
+ */
 struct Point {
 	x int
 	y int
@@ -44,7 +61,10 @@ point := Point{
 	z: -3
 }
 
-// Constants
+/**
+ * Constants
+ * -----------------------------------------------------------------------------
+ */
 `a`
 3.14
 true
@@ -54,7 +74,10 @@ const (
 	world = '世界'
 )
 
-// Strings
+/**
+ * Strings
+ * -----------------------------------------------------------------------------
+ */
 'simple string'
 "simple string"
 r'raw string'
@@ -84,7 +107,10 @@ r"raw string"
 'complex interpolation #3: ${if time == true { time.now() } else { "time is an illusion!" }}'
 "complex interpolation #3: ${if time == true { time.now() } else { "time is an illusion!" }}"
 
-// Statements
+/**
+ * Statements
+ * -----------------------------------------------------------------------------
+ */
 mut bar    := map[string]int
 mut foo123 := `?`
 
@@ -100,7 +126,10 @@ for nb in [1, 2, 3] {
 	continue
 }
 
-// Labels
+/**
+ * Labels
+ * -----------------------------------------------------------------------------
+ */
 mut numbers := {
 	one: 1
 	two: 2
@@ -112,7 +141,10 @@ match music {
 	.classic { println("🎻")        }
 }
 
-// Functions
+/**
+ * Functions
+ * -----------------------------------------------------------------------------
+ */
 fn nope() {}
 
 pub fn hello() string {
@@ -130,7 +162,27 @@ foo()
 nope()
 method(12)
 
-// Modules
+/**
+ * Generics
+ * -----------------------------------------------------------------------------
+ */
+struct Repo<T> {
+	db DB
+}
+
+fn new_repo<T>(db DB) Repo<T> {
+	return Repo<T>{db: db}
+}
+
+fn (r Repo<T>) find_by_id(id int) ?T {
+	table_name := T.name
+	return r.db.query_one<T>('select * from $table_name where id = ?', id)
+}
+
+/**
+ * Modules
+ * -----------------------------------------------------------------------------
+ */
 module mymodule
 
 import os
@@ -138,7 +190,10 @@ import gg
 import math
 import sld.ttf as ttf
 
-// Special labels
+/**
+ * Special labels
+ * -----------------------------------------------------------------------------
+ */
 [live]
 fn print_message() {
 }
@@ -147,7 +202,10 @@ fn print_message() {
 fn inline_func() {
 }
 
-// Pre-proc
+/**
+ * Pre-proc
+ * -----------------------------------------------------------------------------
+ */
 $if condition {
 }
 $if debug {
@@ -157,7 +215,11 @@ $if linux {
 $else {
 }
 
-// C-style pre-proc
+/**
+ * C-style pre-proc
+ * -----------------------------------------------------------------------------
+ */
+
 #flag    -lsqlite3
 #include <file.h>
 #include "file.h"
@@ -166,13 +228,25 @@ $else {
 #ifndef  CONS
 #endif
 
-// Warnings
+/**
+ * Warnings
+ * -----------------------------------------------------------------------------
+ */
+
 mut var := 'No semicolons at the end of statements!';
 if true { mut var := 'No semicolons at the end of statements!'; }
 
 if (true) {
 	eprint('No parentheses around conditions!')
 }
+
+/**
+ * Comments
+ * -----------------------------------------------------------------------------
+ */
+
+// Single-line comment
+// "Strings" should be 'ignored' in comments
 
 /**
  * Multiline comment
