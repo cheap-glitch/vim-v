@@ -118,6 +118,7 @@ syn keyword vKeyword      break
 syn keyword vKeyword      const     skipwhite skipempty nextgroup=vBlockConst
 syn keyword vKeyword      continue
 syn keyword vKeyword      fn
+syn keyword vKeyword      go
 syn keyword vKeyword      import
 syn keyword vKeyword      len
 syn keyword vKeyword      map
