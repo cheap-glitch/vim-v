@@ -8,4 +8,4 @@ if exists("b:current_indent")
 endif
 let b:current_indent="v"
 
-setlocal autoindent
+setlocal autoindent smartindent
