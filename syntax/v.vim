@@ -2,7 +2,7 @@
 
 " vim-v/syntax
 "
-" Quality syntax highlighting for the V programming language.
+" Quality syntax highlighting and support for the V programming language.
 "
 " Copyright (c) 2019-present, cheap glitch
 "

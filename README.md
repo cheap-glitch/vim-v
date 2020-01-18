@@ -9,7 +9,7 @@
 
 **vim-v**  aims  to   provides  syntax  highlighting  for   the
 [V  programming  language](https://vlang.io),  plus   a  few  niceties  such  as
-syntactic folding and warnings for invalid C-like syntax.
+auto-indenting, syntactic folding and warnings for invalid C-like syntax.
 
 ## Installation
 
