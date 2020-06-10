@@ -7,17 +7,17 @@
 " Copyright (c) 2019-present, cheap glitch
 "
 "
-" Permission to use, copy, modify, and/or distribute this software for any purpose
-" with or without fee is hereby  granted, provided that the above copyright notice
-" and this permission notice appear in all copies.
+" Permission  to use,  copy, modify,  and/or  distribute this  software for  any
+" purpose  with or  without  fee  is hereby  granted,  provided  that the  above
+" copyright notice and this permission notice appear in all copies.
 "
-" THE SOFTWARE  IS PROVIDED 'AS IS'  AND THE AUTHOR DISCLAIMS  ALL WARRANTIES WITH
-" REGARD TO THIS SOFTWARE INCLUDING  ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-" FITNESS.  IN NO  EVENT  SHALL THE  AUTHOR  BE LIABLE  FOR  ANY SPECIAL,  DIRECT,
-" INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
-" OF USE, DATA OR  PROFITS, WHETHER IN AN ACTION OF  CONTRACT, NEGLIGENCE OR OTHER
-" TORTIOUS ACTION, ARISING OUT OF OR IN  CONNECTION WITH THE USE OR PERFORMANCE OF
-" THIS SOFTWARE.
+" THE SOFTWARE IS PROVIDED 'AS IS'  AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+" REGARD TO  THIS SOFTWARE INCLUDING  ALL IMPLIED WARRANTIES  OF MERCHANTABILITY
+" AND FITNESS. IN NO  EVENT SHALL THE AUTHOR BE LIABLE  FOR ANY SPECIAL, DIRECT,
+" INDIRECT, OR  CONSEQUENTIAL DAMAGES OR  ANY DAMAGES WHATSOEVER  RESULTING FROM
+" LOSS OF USE, DATA OR PROFITS, WHETHER  IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+" OTHER  TORTIOUS ACTION,  ARISING  OUT OF  OR  IN CONNECTION  WITH  THE USE  OR
+" PERFORMANCE OF THIS SOFTWARE.
 
 
 if exists("b:current_syntax")
@@ -25,9 +25,9 @@ if exists("b:current_syntax")
 endif
 let b:current_syntax="v"
 
-" ================================================================================
+" ==============================================================================
 " Blocks
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn region vBlockFuncArgs       start=/\V(/   end=/\V)/        transparent contained
@@ -53,9 +53,9 @@ syn match  vReturnType          /\v(\w|[<>])+/                 transparent conta
 syn match  vSumTypeName         /\v\w+/                        transparent contained skipwhite skipempty
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Operators
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn match vOperator /\V+/
@@ -70,9 +70,9 @@ syn match vOperator /\V:=/ skipwhite skipempty nextgroup=vBlockMap
 syn match vOperator /\v(^|\s)in(\s|$)/
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Types
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn keyword vType         bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
@@ -85,9 +85,9 @@ syn match   vGenericType  /\v\<\w+\>/                            contained conta
 syn keyword vSumType      type                                   skipwhite nextgroup=vSumTypeName
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Constants
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn match   vNumber     /\v([a-zA-Z_:]\d*)@<!\d+(\.(\d+)?)?/
@@ -95,9 +95,9 @@ syn match   vCharacter  /\v`.`/
 syn keyword vBoolean    true false
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Strings
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn region  vString  start=/\vr?'/ end=/\v'/
@@ -113,9 +113,9 @@ syn region  vInterpolationBlock  matchgroup=vEscapeSequence start=/\V${/ end=/\V
 syn cluster vInterpolationBlockContained  contains=vOperator,vNumber,vCharacter,vBoolean,vString,vKeyword,vConditional,vRepeat,vFunctionCall,vMethodCall
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Statements
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn keyword vKeyword      as
@@ -140,9 +140,9 @@ syn keyword vRepeat       for
 syn keyword vExport       pub
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Labels
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn match vMapKey      /\v^\s*\w+\s*:[^=]/he=e-2
@@ -150,9 +150,9 @@ syn match vConstName   /\v^\s*\w+\s*\=/he=e-1      contained containedin=vBlockC
 syn match vMatchLabel  /\v\.?\w+\s*\{@=/he=e-1     contained containedin=vBlockMatch skipwhite skipempty nextgroup=vBlockMatchBranch
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Functions
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn match vFunctionCall         /\v\w+\(/he=e-1                      nextgroup=vBlockFuncArgs
@@ -161,9 +161,9 @@ syn match vFunctionDeclaration  /\v(fn)@2<= (\w|[<>])+/              nextgroup=v
 syn match vMethodDeclaration    /\v(fn \(\w+ (\w|[<>])+\))@<= \w+/   nextgroup=vBlockFuncParams
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Modules
-" ================================================================================
+" ==============================================================================
 " {{{
 
 " Built-in
@@ -174,9 +174,9 @@ syn keyword vBuiltInModule os
 syn match vModuleName /\v((^import)@7<=|(^module)@7<=) (\w|\.)+/
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Pre-proc
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn match   vPreProcIf       /\V$if /                                           skipwhite skipempty nextgroup=vOS,vDebug,vCondition
@@ -194,9 +194,9 @@ syn match   cHeaderName      /\v\<\w+\.h\>/                           contained
 syn match   cCompilationFlag /\v-\w+/                                 contained
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Warnings
-" ================================================================================
+" ==============================================================================
 " {{{
 "
 if !exists("g:v_warnings")
@@ -212,9 +212,9 @@ if g:v_warnings
 endif
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Comments
-" ================================================================================
+" ==============================================================================
 " {{{
 
 syn match  vComment          "\v//.*$"
@@ -223,9 +223,9 @@ syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
 syn keyword vTodo TODO FIXME BUG contained containedin=vComment,vMultiLineComment
 
 " }}}
-" ================================================================================
+" ==============================================================================
 " Highlight links
-" ================================================================================
+" ==============================================================================
 " {{{
 
 hi link   vBoolean                    Boolean

@@ -19,8 +19,7 @@ function! VIndentExpr(lnum) abort
 		return 0
 	endif
 
-	" Get the content of the current and previous lines (remove
-	" end-of-line comments)
+	" Get the content of the current and previous lines (remove end-of-line comments)
 	let prev_line = substitute(getline(prev_lnum), '//.*$', '', '')
 	let line      = substitute(getline(lnum),      '//.*$', '', '')
 
