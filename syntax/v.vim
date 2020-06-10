@@ -41,11 +41,13 @@ syn region vBlockMatch          start=/\V{/   end=/\V}/   fold transparent conta
 syn region vBlockMatchBranch    start=/\V{/   end=/\V}/   fold transparent contained
 syn region vBlockFuncParams     start=/\V(/   end=/\V)/        transparent contained skipwhite skipempty nextgroup=vReturnType,vBlockFunction
 syn region vBlockStruct         start=/\V{/   end=/\V}/   fold transparent contained
+syn region vBlockInterface      start=/\V{/   end=/\V}/   fold transparent contained
 syn region vBlockTypecast       start=/\V(/   end=/\V)/        transparent contained
 
 syn match  vCondition           /\v.+(\{)@=/                   transparent contained skipwhite skipempty nextgroup=vBlockIf
 syn match  vEnumName            /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockEnum
 syn match  vStructName          /\v(\w|[.<>])+/                transparent contained skipwhite skipempty nextgroup=vBlockStruct
+syn match  vInterfaceName       /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockInterface
 syn match  vMatchedVar          /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockMatch
 syn match  vReturnType          /\v(\w|[<>])+/                 transparent contained skipwhite skipwhite nextgroup=vBlockFunction
 
@@ -77,6 +79,7 @@ syn keyword vInts         int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBloc
 syn keyword vFloats       f32 f64                                nextgroup=vBlockTypecast
 syn keyword vEnum         enum                                   skipwhite nextgroup=vEnumName
 syn keyword vStruct       struct                                 skipwhite nextgroup=vStructName
+syn keyword vInterface    interface                              skipwhite nextgroup=vInterfaceName
 syn match   vGenericType  /\v\<\w+\>/                            contained containedin=vStructName,vFunctionDeclaration,vReturnType
 
 " }}}
@@ -255,6 +258,7 @@ hi link   vExport                     Special
 hi link   vRepeat                     Repeat
 hi link   vString                     String
 hi link   vStruct                     Structure
+hi link   vInterface                  Special
 hi link   vTodo                       Todo
 hi link   vSpecialMarkers             Special
 hi link   vType                       Type
