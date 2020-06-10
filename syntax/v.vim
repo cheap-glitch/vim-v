@@ -50,6 +50,7 @@ syn match  vStructName          /\v(\w|[.<>])+/                transparent conta
 syn match  vInterfaceName       /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockInterface
 syn match  vMatchedVar          /\v\w+/                        transparent contained skipwhite skipempty nextgroup=vBlockMatch
 syn match  vReturnType          /\v(\w|[<>])+/                 transparent contained skipwhite skipwhite nextgroup=vBlockFunction
+syn match  vSumTypeName         /\v\w+/                        transparent contained skipwhite skipempty
 
 " }}}
 " ================================================================================
@@ -81,6 +82,7 @@ syn keyword vEnum         enum                                   skipwhite nextg
 syn keyword vStruct       struct                                 skipwhite nextgroup=vStructName
 syn keyword vInterface    interface                              skipwhite nextgroup=vInterfaceName
 syn match   vGenericType  /\v\<\w+\>/                            contained containedin=vStructName,vFunctionDeclaration,vReturnType
+syn keyword vSumType      type                                   skipwhite nextgroup=vSumTypeName
 
 " }}}
 " ================================================================================
@@ -234,6 +236,7 @@ hi link   vConditional                Conditional
 hi link   vConstName                  Identifier
 hi link   vDebug                      Debug
 hi link   vEnum                       Structure
+hi link   vSumType                    Define
 hi link   vEscapeSequence             Special
 hi link   vFloats                     Type
 hi link   vFunctionCall               Function
