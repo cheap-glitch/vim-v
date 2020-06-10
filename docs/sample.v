@@ -3,13 +3,11 @@
  * docs/sample.v
  */
 
-test {
-}
-
 /**
  * Operators
  * -----------------------------------------------------------------------------
  */
+
 +
 ++
 +=
@@ -35,6 +33,7 @@ in
  * Basic types
  * -----------------------------------------------------------------------------
  */
+
 bool byte byteptr rune string voidptr
 int i8 u8 i16 u16 i32 u32 i64 u64
 f32 f64
@@ -43,6 +42,7 @@ f32 f64
  * Enums
  * -----------------------------------------------------------------------------
  */
+
 enum Color {
 	mauve
 	viridian
@@ -53,6 +53,7 @@ enum Color {
  * Structs
  * -----------------------------------------------------------------------------
  */
+
 struct Point {
 	x int
 	y int
@@ -68,6 +69,7 @@ point := Point{
  * Constants
  * -----------------------------------------------------------------------------
  */
+
 `a`
 3.14
 true
@@ -81,6 +83,7 @@ const (
  * Strings
  * -----------------------------------------------------------------------------
  */
+
 'simple string'
 "simple string"
 r'raw string'
@@ -114,6 +117,7 @@ r"raw string"
  * Statements
  * -----------------------------------------------------------------------------
  */
+
 mut bar    := map[string]int
 mut foo123 := `?`
 
@@ -133,6 +137,7 @@ for nb in [1, 2, 3] {
  * Labels
  * -----------------------------------------------------------------------------
  */
+
 mut numbers := {
 	one: 1
 	two: 2
@@ -148,6 +153,7 @@ match music {
  * Functions
  * -----------------------------------------------------------------------------
  */
+
 fn nope() {}
 
 pub fn hello() string {
@@ -169,6 +175,7 @@ method(12)
  * Generics
  * -----------------------------------------------------------------------------
  */
+
 struct Repo<T> {
 	db DB
 }
@@ -183,9 +190,52 @@ fn (r Repo<T>) find_by_id(id int) ?T {
 }
 
 /**
+ * Inferfaces
+ * -----------------------------------------------------------------------------
+ */
+
+struct Dog {}
+struct Cat {}
+
+fn (d Dog) speak() string {
+    return 'woof'
+}
+
+fn (c Cat) speak() string {
+    return 'meow'
+}
+
+interface Speaker {
+    speak() string
+}
+
+/**
+ * Sum types
+ * -----------------------------------------------------------------------------
+ */
+
+type Expr = BinaryExpr | UnaryExpr | IfExpr
+
+struct BinaryExpr{}
+struct UnaryExpr{}
+struct IfExpr{}
+
+struct CallExpr {
+	args []Expr
+}
+
+fn (p mut Parser) expr(precedence int) Expr {
+	match p.tok {
+		.key_if { return IfExpr{} }
+		else    { return BinaryExpr{} }
+	}
+}
+
+/**
  * Modules
  * -----------------------------------------------------------------------------
  */
+
 module mymodule
 
 import os
@@ -197,6 +247,7 @@ import sld.ttf as ttf
  * Special labels
  * -----------------------------------------------------------------------------
  */
+
 [live]
 fn print_message() {
 }
@@ -209,6 +260,7 @@ fn inline_func() {
  * Pre-proc
  * -----------------------------------------------------------------------------
  */
+
 $if condition {
 }
 $if debug {
@@ -259,4 +311,4 @@ if (true) {
  * "Strings" should be 'ignored' in comments
  */
 
-// vim:foldmethod=syntax:foldlevel=2:
+// vim:foldmethod=syntax:foldlevel=2
