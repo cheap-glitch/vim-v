@@ -1,8 +1,3 @@
-
-/**
- * docs/sample.v
- */
-
 /**
  * Operators
  * -----------------------------------------------------------------------------
@@ -310,5 +305,3 @@ if (true) {
  *
  * "Strings" should be 'ignored' in comments
  */
-
-// vim:foldmethod=syntax:foldlevel=2

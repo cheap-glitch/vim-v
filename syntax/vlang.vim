@@ -1,11 +1,8 @@
-
-
-" vim-v/syntax
+" vim-v
 "
 " Quality syntax highlighting and support for the V programming language.
 "
 " Copyright (c) 2019-present, cheap glitch
-"
 "
 " Permission  to use,  copy, modify,  and/or  distribute this  software for  any
 " purpose  with or  without  fee  is hereby  granted,  provided  that the  above
@@ -19,11 +16,10 @@
 " OTHER  TORTIOUS ACTION,  ARISING  OUT OF  OR  IN CONNECTION  WITH  THE USE  OR
 " PERFORMANCE OF THIS SOFTWARE.
 
-
 if exists("b:current_syntax")
 	finish
 endif
-let b:current_syntax="v"
+let b:current_syntax="vlang"
 
 " ==============================================================================
 " Blocks

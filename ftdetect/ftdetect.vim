@@ -1,6 +1,1 @@
-
-"
-" vim-v/ftdetect
-"
-
-au BufNewFile,BufRead *.v set filetype=v syntax=v
+au BufNewFile,BufRead *.v set filetype=vlang syntax=vlang
