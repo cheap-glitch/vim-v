@@ -19,7 +19,7 @@
 if exists("b:current_syntax")
 	finish
 endif
-let b:current_syntax="vlang"
+let b:current_syntax="v"
 
 " ==============================================================================
 " Blocks
