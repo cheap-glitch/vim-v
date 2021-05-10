@@ -19,12 +19,10 @@
 if exists("b:current_syntax")
 	finish
 endif
-let b:current_syntax="vlang"
+let b:current_syntax = "vlang"
 
-" ==============================================================================
-" Blocks
-" ==============================================================================
-" {{{
+" Blocks {{{
+" ------------------------------------------------------------------------------
 
 syn region vBlockFuncArgs       start=/\V(/   end=/\V)/        transparent contained
 syn region vBlockConst          start=/\V(/   end=/\V)/   fold transparent contained
@@ -48,11 +46,11 @@ syn match  vMatchedVar          /\v\w+/                        transparent conta
 syn match  vReturnType          /\v(\w|[<>])+/                 transparent contained skipwhite skipwhite nextgroup=vBlockFunction
 syn match  vSumTypeName         /\v\w+/                        transparent contained skipwhite skipempty
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Operators
-" ==============================================================================
-" {{{
+
+" Operators {{{
+" ------------------------------------------------------------------------------
 
 syn match vOperator /\V+/
 syn match vOperator /\V-/
@@ -65,11 +63,11 @@ syn match vOperator /\V=/
 syn match vOperator /\V:=/ skipwhite skipempty nextgroup=vBlockMap
 syn match vOperator /\v(^|\s)in(\s|$)/
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Types
-" ==============================================================================
-" {{{
+
+" Types {{{
+" ------------------------------------------------------------------------------
 
 syn keyword vType         bool byte byteptr rune string voidptr  nextgroup=vBlockTypecast
 syn keyword vInts         int i8 u8 i16 u16 i32 u32 i64 u64      nextgroup=vBlockTypecast
@@ -80,21 +78,21 @@ syn keyword vInterface    interface                              skipwhite nextg
 syn match   vGenericType  /\v\<\w+\>/                            contained containedin=vStructName,vFunctionDeclaration,vReturnType
 syn keyword vSumType      type                                   skipwhite nextgroup=vSumTypeName
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Constants
-" ==============================================================================
-" {{{
+
+" Constants {{{
+" ------------------------------------------------------------------------------
 
 syn match   vNumber     /\v([a-zA-Z_:]\d*)@<!\d+(\.(\d+)?)?/
 syn match   vCharacter  /\v`.`/
 syn keyword vBoolean    true false
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Strings
-" ==============================================================================
-" {{{
+
+" Strings {{{
+" ------------------------------------------------------------------------------
 
 syn region  vString  start=/\vr?'/ end=/\v'/
 syn region  vString  start=/\vr?"/ end=/\v"/
@@ -108,11 +106,11 @@ syn region  vInterpolationBlock  matchgroup=vEscapeSequence start=/\V${/ end=/\V
 
 syn cluster vInterpolationBlockContained  contains=vOperator,vNumber,vCharacter,vBoolean,vString,vKeyword,vConditional,vRepeat,vFunctionCall,vMethodCall
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Statements
-" ==============================================================================
-" {{{
+
+" Statements {{{
+" ------------------------------------------------------------------------------
 
 syn keyword vKeyword      as
 syn keyword vKeyword      assert
@@ -135,32 +133,32 @@ syn keyword vConditional  or        skipwhite skipempty nextgroup=vBlockElse
 syn keyword vRepeat       for
 syn keyword vExport       pub
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Labels
-" ==============================================================================
-" {{{
+
+" Labels {{{
+" ------------------------------------------------------------------------------
 
 syn match vMapKey      /\v^\s*\w+\s*:[^=]/he=e-2
 syn match vConstName   /\v^\s*\w+\s*\=/he=e-1      contained containedin=vBlockConst
 syn match vMatchLabel  /\v\.?\w+\s*\{@=/he=e-1     contained containedin=vBlockMatch skipwhite skipempty nextgroup=vBlockMatchBranch
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Functions
-" ==============================================================================
-" {{{
+
+" Functions {{{
+" ------------------------------------------------------------------------------
 
 syn match vFunctionCall         /\v\w+\(/he=e-1                      nextgroup=vBlockFuncArgs
 syn match vMethodCall           /\v\.\w+\(/hs=s+1,he=e-1             nextgroup=vBlockFuncArgs
 syn match vFunctionDeclaration  /\v(fn)@2<= (\w|[<>])+/              nextgroup=vBlockFuncParams
 syn match vMethodDeclaration    /\v(fn \(\w+ (\w|[<>])+\))@<= \w+/   nextgroup=vBlockFuncParams
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Modules
-" ==============================================================================
-" {{{
+
+" Modules {{{
+" ------------------------------------------------------------------------------
 
 " Built-in
 syn keyword vBuiltInModule math
@@ -169,11 +167,11 @@ syn keyword vBuiltInModule os
 " User-defined
 syn match vModuleName /\v((^import)@7<=|(^module)@7<=) (\w|\.)+/
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Pre-proc
-" ==============================================================================
-" {{{
+
+" Pre-proc {{{
+" ------------------------------------------------------------------------------
 
 syn match   vPreProcIf       /\V$if /                                           skipwhite skipempty nextgroup=vOS,vDebug,vCondition
 syn match   vPreProcElse     /\V$else/                                          skipwhite skipempty nextgroup=vBlockElse
@@ -189,14 +187,14 @@ syn match   cConstName       /\v\w+/                                  contained
 syn match   cHeaderName      /\v\<\w+\.h\>/                           contained
 syn match   cCompilationFlag /\v-\w+/                                 contained
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Warnings
-" ==============================================================================
-" {{{
-"
+
+" Warnings {{{
+" ------------------------------------------------------------------------------
+
 if !exists("g:v_warnings")
-	let g:v_warnings=0
+	let g:v_warnings = 0
 endif
 
 if g:v_warnings
@@ -207,22 +205,22 @@ if g:v_warnings
 	syn match vWarning /\v((if)@2<=|(else)@4<=) \([^)]*\)($| ?\{)/
 endif
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Comments
-" ==============================================================================
-" {{{
+
+" Comments {{{
+" ------------------------------------------------------------------------------
 
 syn match  vComment          "\v//.*$"
 syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
 
 syn keyword vTodo TODO FIXME BUG contained containedin=vComment,vMultiLineComment
 
+" ------------------------------------------------------------------------------
 " }}}
-" ==============================================================================
-" Highlight links
-" ==============================================================================
-" {{{
+
+" Highlight links {{{
+" ------------------------------------------------------------------------------
 
 hi link   vBoolean                    Boolean
 hi link   vBuiltInModule              Function
@@ -269,4 +267,5 @@ hi link   cConstName                  Identifier
 hi link   cHeaderName                 Identifier
 hi link   cCompilationFlag            Identifier
 
+" ------------------------------------------------------------------------------
 " }}}
