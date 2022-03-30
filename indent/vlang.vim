@@ -1,7 +1,7 @@
-if exists("b:current_indent")
+if exists('b:current_indent')
 	finish
 endif
-let b:current_indent="vlang"
+let b:current_indent = 'vlang'
 
 setlocal autoindent smartindent
 setlocal indentkeys+=0=},0=) indentexpr=VIndentExpr(v:lnum)

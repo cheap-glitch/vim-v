@@ -1,25 +1,13 @@
-" vim-v
-"
-" Quality syntax highlighting and support for the V programming language.
-"
-" Copyright (c) 2019-present, cheap glitch
-"
-" Permission  to use,  copy, modify,  and/or  distribute this  software for  any
-" purpose  with or  without  fee  is hereby  granted,  provided  that the  above
-" copyright notice and this permission notice appear in all copies.
-"
-" THE SOFTWARE IS PROVIDED 'AS IS'  AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-" REGARD TO  THIS SOFTWARE INCLUDING  ALL IMPLIED WARRANTIES  OF MERCHANTABILITY
-" AND FITNESS. IN NO  EVENT SHALL THE AUTHOR BE LIABLE  FOR ANY SPECIAL, DIRECT,
-" INDIRECT, OR  CONSEQUENTIAL DAMAGES OR  ANY DAMAGES WHATSOEVER  RESULTING FROM
-" LOSS OF USE, DATA OR PROFITS, WHETHER  IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-" OTHER  TORTIOUS ACTION,  ARISING  OUT OF  OR  IN CONNECTION  WITH  THE USE  OR
-" PERFORMANCE OF THIS SOFTWARE.
+" Vim syntax file
+" Language:    V
+" Maintainer:  cheap glitch <cheap.glitch@gmail.com>
+" Version:     3.0.2
+" URL:         https://github.com/cheap-glitch/vim-v
 
-if exists("b:current_syntax")
+if exists('b:current_syntax')
 	finish
 endif
-let b:current_syntax = "vlang"
+let b:current_syntax = 'vlang'
 
 " Blocks {{{
 " ------------------------------------------------------------------------------
@@ -55,7 +43,7 @@ syn match  vSumTypeName         /\v\w+/                        transparent conta
 syn match vOperator /\V+/
 syn match vOperator /\V-/
 syn match vOperator /\V*/
-syn match vOperator "\V/"
+syn match vOperator '\V/'
 syn match vOperator /\V%/
 syn match vOperator /\V>/
 syn match vOperator /\V</
@@ -193,7 +181,7 @@ syn match   cCompilationFlag /\v-\w+/                                 contained
 " Warnings {{{
 " ------------------------------------------------------------------------------
 
-if !exists("g:v_warnings")
+if !exists('g:v_warnings')
 	let g:v_warnings = 0
 endif
 
@@ -211,8 +199,8 @@ endif
 " Comments {{{
 " ------------------------------------------------------------------------------
 
-syn match  vComment          "\v//.*$"
-syn region vMultiLineComment start="\v/\*" end="\v\*/" skip=/\v'|"|;/
+syn match  vComment          '\v//.*$'
+syn region vMultiLineComment start='\v/\*' end='\v\*/' skip=/\v'|"|;/
 
 syn keyword vTodo TODO FIXME BUG contained containedin=vComment,vMultiLineComment
 
