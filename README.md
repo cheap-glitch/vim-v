@@ -1,56 +1,59 @@
-<div align="center"><h1>vim-v</h1></div>
-<img src="https://raw.githubusercontent.com/cheap-glitch/vim-v/main/docs/screenshot.png" alt="code sample">
-<p align="right"><em><sub>
-	colorscheme: <a href="https://github.com/cocopon/iceberg.vim">Iceberg</a>
-	&nbsp;|&nbsp;
-	font: <a href="http://sourcefoundry.org/hack">Hack</a>
-</sub></em></p>
-<p>&nbsp;</p>
+<h1 align="center">vim-v</h1>
 
-**vim-v**  aims  to   provides  syntax  highlighting  for   the
-[V  programming  language](https://vlang.io),  plus   a  few  niceties  such  as
-auto-indenting, syntactic folding and warnings for invalid C-like syntax.
+![A demo code sample.](screenshot.png)
+
+<p align="right">
+	<sub>
+		<em>colorscheme: <a href="https://github.com/cocopon/iceberg.vim">Iceberg</a></em>
+		&ensp;|&ensp;
+		<em>font: <a href="http://sourcefoundry.org/hack">Hack</a></em>
+	</sub>
+</p>
+
+## Features
+
+ * Full syntax highlighting
+ * Auto-indentation and syntactic folding
+ * Optional highlighting of some syntax errors
 
 ## Installation
 
-Use  the plugin  manager of  your  choice to  install _vim-v_. For example, with
-[vim-plug](https://github.com/junegunn/vim-plug):
+The recommended way of installing plugins is through a plugin manager.
+
+With [dein.vim](https://github.com/Shougo/dein.vim):
 
 ```vim
-" ~/.vimrc
+dein#add('cheap-glitch/vim-v')
+```
 
-call plug#begin('~/.vim/plugged')
+With [vim-plug](https://github.com/junegunn/vim-plug):
 
-" [...]
+```vim
 Plug 'cheap-glitch/vim-v'
-
-call plug#end()
-```
-Then reload your _vimrc_ and run `:PlugInstall`.
-
-#### Conditional loading with vim-plug
-
-If you use _vim-plug_, you can do something like this:
-```vim
-" This will only load the syntax plugin when a .v file is first opened
-Plug 'cheap-glitch/vim-v', { 'for': 'v' }
 ```
 
-#### Display warnings for invalid C-like syntax
+## Usage
+
+### Display warnings for invalid C-like syntax
 
 The syntax of V is very similar to that of C and C-like languages, but there are
-nonetheless  some significant  differences. To  help you  avoid using  invalid C
-syntax out of  habit, you can activate the option  `v_warnings`. It will display
-invalid constructs as errors:
+nonetheless  some  significant differences.  To  help  you avoid  using  invalid
+C-style  syntax out  of habit,  you can  activate the  option to  highlight some
+syntax errors by adding this line anywhere in your `.vimrc` or `init.vim`:
+
 ```vim
-let g:v_warnings=1
+let g:v_warnings = 1
 ```
 
-## Acknowledgements
+## Contributing
 
-The first version of the code was based on [v.vim](https://github.com/andreyrmg/v.vim)
+Contributions are welcomed! Please open an issue before submitting substantial changes.
+
+## Acknowledgments
+
+The first version of this plugin was based on [v.vim](https://github.com/andreyrmg/v.vim)
 by [andreyrmg](https://github.com/andreyrmg).
 
 ## License
 
-This software is distributed under the ISC license.
+ISC
